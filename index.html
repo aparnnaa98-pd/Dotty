@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dot Morph Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;375;425;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F1EA;
+    --bg-warm: #EBE6DB;
+    --surface: #FFFFFF;
+    --ink: #1A1815;
+    --ink-soft: #5C574E;
+    --ink-faint: #908A7D;
+    --line: rgba(26, 24, 21, 0.08);
+    --line-strong: rgba(26, 24, 21, 0.16);
+    --accent: #C8533D;
+    --accent-soft: #F5E4DE;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 2px rgba(26, 24, 21, 0.04);
+    --shadow-md: 0 8px 24px rgba(26, 24, 21, 0.06), 0 1px 2px rgba(26, 24, 21, 0.04);
+    --display: 'Hanken Grotesk', -apple-system, sans-serif;
+    --body: 'Hanken Grotesk', -apple-system, sans-serif;
+    --mono: 'Geist Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--body);
+    font-weight: 375;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(200, 83, 61, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(26, 24, 21, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 0.5px solid var(--line);
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    align-self: center;
+  }
+
+  .brand-mark span {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: var(--ink);
+    border-radius: 50%;
+  }
+  .brand-mark span:nth-child(1) { top: 2px; left: 11px; }
+  .brand-mark span:nth-child(2) { top: 11px; left: 2px; }
+  .brand-mark span:nth-child(3) { top: 11px; left: 11px; background: var(--accent); }
+  .brand-mark span:nth-child(4) { top: 11px; left: 20px; }
+  .brand-mark span:nth-child(5) { top: 20px; left: 11px; }
+
+  .brand-name {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 425;
+    letter-spacing: -0.02em;
+  }
+
+  .brand-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+  }
+
+  .header-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: 220px 1fr 280px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .panel {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--line);
+    box-shadow: var(--shadow-sm);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .panel-title {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 425;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-title::before {
+    content: '';
+    width: 3px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .section {
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--line);
+  }
+
+  .section:last-of-type { border-bottom: none; padding-bottom: 0; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* Compact frame rows — horizontal layout */
+  .frame-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: var(--bg-warm);
+    border: 0.5px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .frame-row:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+
+  .frame-row.filled {
+    border-style: solid;
+    background: var(--surface);
+  }
+
+  .frame-row.dragover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .frame-preview {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: var(--bg-warm);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .frame-row.filled .frame-preview {
+    background: var(--bg);
+  }
+
+  .frame-preview img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+  }
+
+  .frame-preview svg {
+    opacity: 0.4;
+  }
+
+  .frame-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .frame-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 425;
+    margin-bottom: 2px;
+  }
+
+  .frame-status {
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .frame-row.filled .frame-status {
+    color: var(--ink);
+  }
+
+  .frame-clear {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 0.5px solid var(--line-strong);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .frame-clear svg { width: 8px; height: 8px; stroke: var(--ink-soft); }
+  .frame-clear:hover { background: var(--ink); border-color: var(--ink); }
+  .frame-clear:hover svg { stroke: var(--surface); }
+  .frame-row.filled:hover .frame-clear { display: flex; }
+
+  /* iPhone mockup */
+  .stage-panel {
+    padding: 32px 20px;
+    background: linear-gradient(180deg, var(--bg-warm) 0%, var(--surface) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 640px;
+  }
+
+  .phone {
+    width: 280px;
+    aspect-ratio: 280 / 580;
+    background: var(--ink);
+    border-radius: 44px;
+    padding: 8px;
+    position: relative;
+    box-shadow:
+      0 0 0 1.5px rgba(0,0,0,0.4),
+      0 30px 60px rgba(26, 24, 21, 0.18),
+      0 12px 24px rgba(26, 24, 21, 0.10);
+  }
+
+  /* Side buttons */
+  .phone::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 110px;
+    width: 3px;
+    height: 26px;
+    background: #2a2825;
+    border-radius: 2px 0 0 2px;
+  }
+
+  .phone-volume {
+    position: absolute;
+    left: -2px;
+    top: 150px;
+    width: 3px;
+    height: 56px;
+    background: #2a2825;
+    border-radius: 2px 0 0 2px;
+  }
+
+  .phone-power {
+    position: absolute;
+    right: -2px;
+    top: 130px;
+    width: 3px;
+    height: 70px;
+    background: #2a2825;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    border-radius: 36px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Dynamic island */
+  .phone-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 26px;
+    background: #000;
+    border-radius: 14px;
+    z-index: 10;
+  }
+
+  /* Status bar */
+  .phone-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 0;
+    z-index: 5;
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 425;
+    color: var(--ink);
+  }
+
+  .phone-status-right {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .phone-status-right svg { width: 14px; height: 10px; }
+
+  /* Canvas area within the phone */
+  .phone-canvas-wrap {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .phone-canvas-wrap canvas {
+    display: block;
+    /* size controlled inline via JS */
+  }
+
+  .phone-empty {
+    color: var(--ink-faint);
+    font-size: 11px;
+    text-align: center;
+    padding: 20px;
+    line-height: 1.6;
+    max-width: 200px;
+  }
+
+  .phone-empty .display {
+    font-family: var(--display);
+    font-size: 15px;
+    color: var(--ink);
+    font-weight: 425;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .phone-empty svg {
+    display: block;
+    margin: 0 auto 12px;
+    opacity: 0.3;
+  }
+
+  /* Home indicator */
+  .phone-home {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: var(--ink);
+    border-radius: 2px;
+    opacity: 0.35;
+    z-index: 10;
+  }
+
+  /* Meta below phone */
+  .phone-meta {
+    margin-top: 18px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .phone-meta .phase-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Controls */
+  .control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .control:last-child { margin-bottom: 0; }
+
+  .control label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex: 0 0 78px;
+    font-weight: 375;
+  }
+
+  .control input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--ink);
+    border-radius: 50%;
+    cursor: grab;
+    transition: transform 0.1s;
+  }
+
+  .control input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .control input[type="range"]::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(0.95); }
+
+  .control input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--ink);
+    border-radius: 50%;
+    border: none;
+    cursor: grab;
+  }
+
+  .readout {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 425;
+    min-width: 40px;
+    text-align: right;
+    color: var(--ink);
+  }
+
+  .mode-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: var(--bg-warm);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+  }
+
+  .mode-btn {
+    padding: 8px 10px;
+    font-family: var(--body);
+    font-size: 11px;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: all 0.15s;
+    font-weight: 375;
+  }
+
+  .mode-btn:hover { color: var(--ink); }
+  .mode-btn.active {
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mode-hint {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 8px;
+    line-height: 1.5;
+    font-family: var(--body);
+    font-weight: 375;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .check-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 10px;
+  }
+
+  .check-row input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 0.5px solid var(--line-strong);
+    border-radius: 3px;
+    background: var(--surface);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .check-row input[type="checkbox"]:checked {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .check-row input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 0.5px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--surface);
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+
+  .export-opt {
+    margin-bottom: 4px;
+  }
+
+  .swatch {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 0.5px solid var(--line);
+    transition: transform 0.1s;
+    position: relative;
+  }
+
+  .swatch:hover { transform: scale(1.12); }
+  .swatch.active::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+  }
+
+  .color-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .color-input-row input[type="color"] {
+    width: 36px;
+    height: 36px;
+    border: 0.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    padding: 3px;
+    background: var(--surface);
+  }
+
+  .color-input-row input[type="text"] {
+    flex: 1;
+    height: 36px;
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 0 10px;
+    border: 0.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .color-input-row input[type="text"]:focus { border-color: var(--ink); }
+
+  .button {
+    padding: 10px 14px;
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 375;
+    background: var(--surface);
+    color: var(--ink);
+    border: 0.5px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .button:hover {
+    background: var(--ink);
+    color: var(--surface);
+    border-color: var(--ink);
+  }
+
+  .button.primary {
+    background: var(--ink);
+    color: var(--surface);
+    border-color: var(--ink);
+  }
+
+  .button.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+  .button svg { width: 12px; height: 12px; }
+
+  .button-row { display: flex; gap: 6px; }
+  .button-row .button { flex: 1; }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 24, 21, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+    padding: 24px;
+  }
+
+  .modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 0.5px solid var(--line);
+  }
+
+  .modal-title {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 425;
+    letter-spacing: -0.02em;
+  }
+
+  .modal-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .modal-desc code {
+    font-family: var(--mono);
+    background: var(--bg-warm);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
+  .code-block {
+    flex: 1;
+    min-height: 320px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.6;
+    padding: 16px;
+    border: 0.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-warm);
+    resize: none;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1100px) {
+    .workspace { grid-template-columns: 200px 1fr 260px; gap: 16px; }
+    .app { padding: 24px; }
+  }
+
+  @media (max-width: 880px) {
+    .workspace { grid-template-columns: 1fr; }
+    .app { padding: 20px; }
+    .brand-name { font-size: 22px; }
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink);
+    color: var(--surface);
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 375;
+    z-index: 200;
+    transition: transform 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  .toast.visible { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-mark">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <h1 class="brand-name">Dot Morph Studio</h1>
+        <span class="brand-tag">v 1.2</span>
+      </div>
+      <div class="header-meta">Particle avatars / generative</div>
+    </header>
+
+    <main class="workspace">
+      <!-- Left: Frames -->
+      <div class="panel">
+        <div class="panel-title">Frames</div>
+
+        <div class="frame-row" id="slot-a">
+          <div class="frame-preview">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
+          </div>
+          <div class="frame-info">
+            <div class="frame-label">Start</div>
+            <div class="frame-status">Click or drop PNG</div>
+          </div>
+        </div>
+
+        <div class="frame-row" id="slot-b">
+          <div class="frame-preview">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
+          </div>
+          <div class="frame-info">
+            <div class="frame-label">End</div>
+            <div class="frame-status">Optional</div>
+          </div>
+        </div>
+
+        <input type="file" id="file-a" accept="image/png" hidden />
+        <input type="file" id="file-b" accept="image/png" hidden />
+
+        <p style="font-size: 11px; color: var(--ink-faint); line-height: 1.6; margin-top: 4px;">
+          Transparent-background PNGs work best. Without an end frame, dots scatter and reform the start on loop.
+        </p>
+      </div>
+
+      <!-- Center: iPhone stage -->
+      <div class="panel stage-panel">
+        <div>
+          <div class="phone">
+            <div class="phone-volume"></div>
+            <div class="phone-power"></div>
+            <div class="phone-screen">
+              <div class="phone-island"></div>
+              <div class="phone-status">
+                <span>9:41</span>
+                <div class="phone-status-right">
+                  <svg viewBox="0 0 18 12" fill="currentColor"><path d="M1 8h2v3H1zm4-2h2v5H5zm4-2h2v7H9zm4-2h2v9h-2z"/></svg>
+                  <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" rx="0.5" fill="currentColor"/></svg>
+                </div>
+              </div>
+              <div class="phone-canvas-wrap" id="phone-canvas-wrap">
+                <div class="phone-empty" id="phone-empty">
+                  <svg width="32" height="32" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1">
+                    <circle cx="14" cy="14" r="2"/>
+                    <circle cx="24" cy="14" r="2"/>
+                    <circle cx="34" cy="14" r="2"/>
+                    <circle cx="14" cy="24" r="2"/>
+                    <circle cx="34" cy="24" r="2"/>
+                    <circle cx="14" cy="34" r="2"/>
+                    <circle cx="24" cy="34" r="2"/>
+                    <circle cx="34" cy="34" r="2"/>
+                  </svg>
+                  <span class="display">Begin with a shape</span>
+                  Upload a PNG silhouette to preview your avatar in context.
+                </div>
+                <canvas id="canvas" width="560" height="560" style="display:none"></canvas>
+              </div>
+              <div class="phone-home"></div>
+            </div>
+          </div>
+          <div class="phone-meta" id="phone-meta" style="visibility: hidden;">
+            <span class="phase-dot"></span><span id="phase-name">idle</span> · <span id="stage-stats">— dots</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Controls -->
+      <div class="panel">
+        <div class="panel-title">Controls</div>
+
+        <div class="section">
+          <div class="section-label">Transition</div>
+          <div class="mode-toggle">
+            <button class="mode-btn active" id="mode-direct">Direct morph</button>
+            <button class="mode-btn" id="mode-disperse">Disperse</button>
+          </div>
+          <p class="mode-hint" id="mode-hint">Holds start, morphs to end, holds, morphs back.</p>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Motion</div>
+          <div class="control">
+            <label>Speed</label>
+            <input type="range" id="speed" min="1" max="10" step="1" value="5" />
+            <span class="readout" id="speed-out">5</span>
+          </div>
+          <div class="control">
+            <label>Dot count</label>
+            <input type="range" id="count" min="100" max="2000" step="50" value="700" />
+            <span class="readout" id="count-out">700</span>
+          </div>
+          <div class="control">
+            <label>Dot size</label>
+            <input type="range" id="size" min="1" max="8" step="0.5" value="3" />
+            <span class="readout" id="size-out">3</span>
+          </div>
+          <div class="control">
+            <label>Scale</label>
+            <input type="range" id="scale" min="30" max="100" step="1" value="65" />
+            <span class="readout" id="scale-out">65%</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Color</div>
+          <div class="swatches" id="swatches"></div>
+          <div class="color-input-row">
+            <input type="color" id="color-picker" value="#C8533D" />
+            <input type="text" id="color-hex" value="#C8533D" maxlength="7" />
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="button-row">
+            <button class="button" id="play-btn">
+              <svg viewBox="0 0 12 12" fill="currentColor" id="play-icon"><rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/></svg>
+              <span id="play-label">Pause</span>
+            </button>
+            <button class="button" id="restart-btn">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 6a4 4 0 1 1 1.5 3.1"/><path d="M2 2v3h3"/></svg>
+              Restart
+            </button>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Export</div>
+          <div class="mode-toggle" style="margin-bottom: 10px;">
+            <button class="mode-btn active" id="fmt-png" data-fmt="png">PNG</button>
+            <button class="mode-btn" id="fmt-svg" data-fmt="svg">SVG</button>
+          </div>
+          <div class="export-opt">
+            <label class="check-row">
+              <input type="checkbox" id="export-transparent" checked />
+              <span>Transparent background</span>
+            </label>
+          </div>
+          <div class="control export-bg-row" id="export-bg-row" style="display:none;">
+            <label>BG color</label>
+            <input type="color" id="export-bg-color" value="#F4F1EA" style="width: 32px; height: 28px; border: 0.5px solid var(--line); border-radius: 4px; padding: 2px; background: var(--surface); cursor: pointer;" />
+            <span class="readout" id="export-bg-readout" style="font-size: 10px;">#F4F1EA</span>
+          </div>
+          <div class="control" id="export-res-row">
+            <label>Resolution</label>
+            <input type="range" id="export-res" min="1" max="4" step="1" value="2" />
+            <span class="readout" id="export-res-out">2×</span>
+          </div>
+          <button class="button primary" id="export-frame" style="width: 100%;">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 1v7m0 0l-2.5-2.5M6 8l2.5-2.5M2 10h8"/></svg>
+            <span id="export-btn-label">Export PNG</span>
+          </button>
+        </div>
+
+        <button class="button" id="export-code" style="width: 100%;">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 4L1.5 6L4 8M8 4l2.5 2L8 8M7 2.5L5 9.5"/></svg>
+          Get code
+        </button>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span>Local-only · no upload</span>
+      <span>Built for designers</span>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+<script>
+(function(){
+  const STAGE_SIZE = 560;
+  const SWATCH_COLORS = ['#C8533D','#1A1815','#534AB7','#1D9E75','#D4537E','#378ADD','#BA7517','#888780','#E24B4A','#97C459','#7F77DD','#FFFFFF'];
+
+  const phoneCanvasWrap = document.getElementById('phone-canvas-wrap');
+  const phoneEmpty = document.getElementById('phone-empty');
+  const phoneMeta = document.getElementById('phone-meta');
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const slotA = document.getElementById('slot-a');
+  const slotB = document.getElementById('slot-b');
+  const fileA = document.getElementById('file-a');
+  const fileB = document.getElementById('file-b');
+  const speedInput = document.getElementById('speed');
+  const speedOut = document.getElementById('speed-out');
+  const countInput = document.getElementById('count');
+  const countOut = document.getElementById('count-out');
+  const sizeInput = document.getElementById('size');
+  const sizeOut = document.getElementById('size-out');
+  const scaleInput = document.getElementById('scale');
+  const scaleOut = document.getElementById('scale-out');
+  const swatchesEl = document.getElementById('swatches');
+  const colorPicker = document.getElementById('color-picker');
+  const colorHex = document.getElementById('color-hex');
+  const playBtn = document.getElementById('play-btn');
+  const playLabel = document.getElementById('play-label');
+  const playIcon = document.getElementById('play-icon');
+  const restartBtn = document.getElementById('restart-btn');
+  const exportFrameBtn = document.getElementById('export-frame');
+  const exportCodeBtn = document.getElementById('export-code');
+  const fmtPngBtn = document.getElementById('fmt-png');
+  const fmtSvgBtn = document.getElementById('fmt-svg');
+  const exportTransparent = document.getElementById('export-transparent');
+  const exportBgRow = document.getElementById('export-bg-row');
+  const exportBgColor = document.getElementById('export-bg-color');
+  const exportBgReadout = document.getElementById('export-bg-readout');
+  const exportResRow = document.getElementById('export-res-row');
+  const exportRes = document.getElementById('export-res');
+  const exportResOut = document.getElementById('export-res-out');
+  const exportBtnLabel = document.getElementById('export-btn-label');
+  const modeDirectBtn = document.getElementById('mode-direct');
+  const modeDisperseBtn = document.getElementById('mode-disperse');
+  const modeHint = document.getElementById('mode-hint');
+  const phaseName = document.getElementById('phase-name');
+  const stageStats = document.getElementById('stage-stats');
+  const toast = document.getElementById('toast');
+
+  const state = {
+    imgA: null, imgB: null,
+    dataUrlA: null, dataUrlB: null,
+    targetsA: [], targetsB: [],
+    dotCount: 700,
+    speed: 5,
+    dotSize: 3,
+    scale: 65,
+    color: '#C8533D',
+    mode: 'direct',
+    playing: true,
+    dots: [],
+    phase: 'at-a',
+    phaseT: 0,
+    rafId: null,
+    lastTime: 0,
+  };
+
+  // Compute the canvas display size based on the phone screen width and scale
+  function applyCanvasScale() {
+    const wrap = phoneCanvasWrap;
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    const base = Math.min(w, h);
+    const size = Math.round(base * (state.scale / 100));
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+  }
+
+  SWATCH_COLORS.forEach(c => {
+    const sw = document.createElement('div');
+    sw.className = 'swatch';
+    sw.style.background = c;
+    if (c === '#FFFFFF') sw.style.border = '0.5px solid var(--line-strong)';
+    sw.dataset.color = c;
+    sw.addEventListener('click', () => setColor(c));
+    swatchesEl.appendChild(sw);
+  });
+  updateSwatchActive();
+
+  function updateSwatchActive() {
+    swatchesEl.querySelectorAll('.swatch').forEach(el => {
+      el.classList.toggle('active', el.dataset.color.toLowerCase() === state.color.toLowerCase());
+    });
+  }
+
+  function setColor(c) {
+    state.color = c;
+    colorPicker.value = c;
+    colorHex.value = c.toUpperCase();
+    updateSwatchActive();
+  }
+
+  colorPicker.addEventListener('input', e => setColor(e.target.value));
+  colorHex.addEventListener('change', e => {
+    let v = e.target.value.trim();
+    if (!v.startsWith('#')) v = '#' + v;
+    if (/^#[0-9A-Fa-f]{6}$/.test(v)) setColor(v);
+    else colorHex.value = state.color.toUpperCase();
+  });
+
+  speedInput.addEventListener('input', e => {
+    state.speed = parseInt(e.target.value);
+    speedOut.textContent = state.speed;
+  });
+
+  countInput.addEventListener('input', e => {
+    state.dotCount = parseInt(e.target.value);
+    countOut.textContent = state.dotCount;
+    rebuildTargets();
+  });
+
+  sizeInput.addEventListener('input', e => {
+    state.dotSize = parseFloat(e.target.value);
+    sizeOut.textContent = state.dotSize;
+  });
+
+  scaleInput.addEventListener('input', e => {
+    state.scale = parseInt(e.target.value);
+    scaleOut.textContent = state.scale + '%';
+    applyCanvasScale();
+  });
+
+  modeDirectBtn.addEventListener('click', () => setMode('direct'));
+  modeDisperseBtn.addEventListener('click', () => setMode('disperse'));
+
+  function setMode(m) {
+    state.mode = m;
+    modeDirectBtn.classList.toggle('active', m === 'direct');
+    modeDisperseBtn.classList.toggle('active', m === 'disperse');
+    modeHint.textContent = m === 'direct'
+      ? 'Holds start, morphs to end, holds, morphs back.'
+      : 'Start scatters into a cloud, then assembles into end.';
+    if (state.targetsA.length) restartAnimation();
+  }
+
+  slotA.addEventListener('click', e => { if (!e.target.closest('.frame-clear')) fileA.click(); });
+  slotB.addEventListener('click', e => { if (!e.target.closest('.frame-clear')) fileB.click(); });
+  fileA.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0], 'a'); e.target.value = ''; });
+  fileB.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0], 'b'); e.target.value = ''; });
+
+  [['a', slotA], ['b', slotB]].forEach(([which, el]) => {
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('dragover'); });
+    el.addEventListener('dragleave', () => el.classList.remove('dragover'));
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      el.classList.remove('dragover');
+      const file = Array.from(e.dataTransfer.files).find(f => f.type === 'image/png');
+      if (file) loadFile(file, which);
+      else showToast('PNG files only');
+    });
+  });
+
+  playBtn.addEventListener('click', () => {
+    state.playing = !state.playing;
+    playLabel.textContent = state.playing ? 'Pause' : 'Play';
+    if (state.playing) {
+      state.lastTime = performance.now();
+      playIcon.innerHTML = '<rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/>';
+    } else {
+      playIcon.innerHTML = '<path d="M3 2l7 4-7 4z"/>';
+    }
+  });
+
+  restartBtn.addEventListener('click', restartAnimation);
+
+  function restartAnimation() {
+    if (!state.targetsA.length) return;
+    initDots();
+    if (state.mode === 'direct') {
+      // Direct mode starts WITH the start shape already formed
+      placeDotsAt('a');
+      state.phase = 'at-a';
+    } else {
+      state.phase = state.imgB ? 'forming-a' : 'forming';
+    }
+    state.phaseT = 0;
+    if (!state.playing) {
+      state.playing = true;
+      playLabel.textContent = 'Pause';
+      playIcon.innerHTML = '<rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/>';
+    }
+  }
+
+  // --- Export controls ---
+  const exportState = { format: 'png', transparent: true, bgColor: '#F4F1EA', res: 2 };
+
+  function setExportFormat(f) {
+    exportState.format = f;
+    fmtPngBtn.classList.toggle('active', f === 'png');
+    fmtSvgBtn.classList.toggle('active', f === 'svg');
+    exportBtnLabel.textContent = f === 'png' ? 'Export PNG' : 'Export SVG';
+    exportResRow.style.display = f === 'png' ? 'flex' : 'none';
+  }
+
+  fmtPngBtn.addEventListener('click', () => setExportFormat('png'));
+  fmtSvgBtn.addEventListener('click', () => setExportFormat('svg'));
+
+  exportTransparent.addEventListener('change', e => {
+    exportState.transparent = e.target.checked;
+    exportBgRow.style.display = e.target.checked ? 'none' : 'flex';
+  });
+
+  exportBgColor.addEventListener('input', e => {
+    exportState.bgColor = e.target.value;
+    exportBgReadout.textContent = e.target.value.toUpperCase();
+  });
+
+  exportRes.addEventListener('input', e => {
+    exportState.res = parseInt(e.target.value);
+    exportResOut.textContent = exportState.res + '×';
+  });
+
+  exportFrameBtn.addEventListener('click', () => {
+    if (!state.targetsA.length) return showToast('Add a PNG first');
+    if (exportState.format === 'png') doExportPNG();
+    else doExportSVG();
+  });
+
+  function doExportPNG() {
+    const res = exportState.res;
+    const ex = document.createElement('canvas');
+    ex.width = STAGE_SIZE * res;
+    ex.height = STAGE_SIZE * res;
+    const ec = ex.getContext('2d');
+    ec.scale(res, res);
+    if (!exportState.transparent) {
+      ec.fillStyle = exportState.bgColor;
+      ec.fillRect(0, 0, STAGE_SIZE, STAGE_SIZE);
+    }
+    ec.fillStyle = state.color;
+    for (const d of state.dots) {
+      ec.beginPath();
+      ec.arc(d.x, d.y, state.dotSize, 0, Math.PI * 2);
+      ec.fill();
+    }
+    const link = document.createElement('a');
+    link.download = 'dot-avatar-' + Date.now() + '.png';
+    link.href = ex.toDataURL('image/png');
+    link.click();
+    showToast(`PNG exported (${ex.width}×${ex.height})`);
+  }
+
+  function doExportSVG() {
+    const w = STAGE_SIZE;
+    const h = STAGE_SIZE;
+    const parts = [];
+    parts.push(`<?xml version="1.0" encoding="UTF-8"?>`);
+    parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">`);
+    if (!exportState.transparent) {
+      parts.push(`  <rect width="${w}" height="${h}" fill="${exportState.bgColor}"/>`);
+    }
+    parts.push(`  <g fill="${state.color}">`);
+    const r = state.dotSize;
+    for (const d of state.dots) {
+      const cx = Math.round(d.x * 100) / 100;
+      const cy = Math.round(d.y * 100) / 100;
+      parts.push(`    <circle cx="${cx}" cy="${cy}" r="${r}"/>`);
+    }
+    parts.push(`  </g>`);
+    parts.push(`</svg>`);
+    const svg = parts.join('\n');
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = 'dot-avatar-' + Date.now() + '.svg';
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
+    showToast(`SVG exported (${state.dots.length} dots)`);
+  }
+
+  exportCodeBtn.addEventListener('click', showCodeModal);
+
+  function loadFile(file, which) {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        if (which === 'a') {
+          state.imgA = img;
+          state.dataUrlA = ev.target.result;
+          state.targetsA = extractTargets(img, state.dotCount);
+          renderSlotFilled(slotA, 'Start', ev.target.result, 'a', file.name);
+        } else {
+          state.imgB = img;
+          state.dataUrlB = ev.target.result;
+          state.targetsB = extractTargets(img, state.dotCount);
+          renderSlotFilled(slotB, 'End', ev.target.result, 'b', file.name);
+        }
+        startIfReady();
+      };
+      img.onerror = () => showToast('Could not load image');
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderSlotFilled(el, label, dataUrl, which, filename) {
+    el.classList.add('filled');
+    const short = filename.length > 18 ? filename.slice(0, 15) + '...' : filename;
+    el.innerHTML = `
+      <div class="frame-preview"><img src="${dataUrl}" alt="${label}"/></div>
+      <div class="frame-info">
+        <div class="frame-label">${label}</div>
+        <div class="frame-status" title="${filename}">${short}</div>
+      </div>
+      <div class="frame-clear" data-which="${which}">
+        <svg viewBox="0 0 9 9" fill="none"><path d="M1 1l7 7M8 1l-7 7" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+    `;
+    el.querySelector('.frame-clear').addEventListener('click', e => {
+      e.stopPropagation();
+      clearSlot(which);
+    });
+  }
+
+  function clearSlot(which) {
+    const emptyHTML = (label, status) => `
+      <div class="frame-preview">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
+      </div>
+      <div class="frame-info">
+        <div class="frame-label">${label}</div>
+        <div class="frame-status">${status}</div>
+      </div>
+    `;
+    if (which === 'a') {
+      state.imgA = null; state.dataUrlA = null; state.targetsA = [];
+      slotA.classList.remove('filled');
+      slotA.innerHTML = emptyHTML('Start', 'Click or drop PNG');
+    } else {
+      state.imgB = null; state.dataUrlB = null; state.targetsB = [];
+      slotB.classList.remove('filled');
+      slotB.innerHTML = emptyHTML('End', 'Optional');
+    }
+    if (!state.targetsA.length) {
+      canvas.style.display = 'none';
+      phoneEmpty.style.display = 'block';
+      phoneMeta.style.visibility = 'hidden';
+      state.dots = [];
+    } else {
+      restartAnimation();
+    }
+  }
+
+  function startIfReady() {
+    if (!state.targetsA.length) return;
+    canvas.style.display = 'block';
+    phoneEmpty.style.display = 'none';
+    phoneMeta.style.visibility = 'visible';
+    applyCanvasScale();
+    initDots();
+    if (state.mode === 'direct') {
+      placeDotsAt('a');
+      state.phase = 'at-a';
+    } else {
+      state.phase = state.imgB ? 'forming-a' : 'forming';
+    }
+    state.phaseT = 0;
+    if (!state.rafId) {
+      state.lastTime = performance.now();
+      tick(state.lastTime);
+    }
+  }
+
+  function rebuildTargets() {
+    if (state.imgA) state.targetsA = extractTargets(state.imgA, state.dotCount);
+    if (state.imgB) state.targetsB = extractTargets(state.imgB, state.dotCount);
+    if (state.targetsA.length) {
+      initDots();
+      if (state.mode === 'direct') {
+        placeDotsAt('a');
+        state.phase = 'at-a';
+      } else {
+        state.phase = state.imgB ? 'forming-a' : 'forming';
+      }
+      state.phaseT = 0;
+    }
+  }
+
+  function extractTargets(img, count) {
+    const sample = document.createElement('canvas');
+    const SS = 240;
+    sample.width = SS; sample.height = SS;
+    const sctx = sample.getContext('2d');
+    const ratio = Math.min(SS / img.width, SS / img.height) * 0.7;
+    const w = img.width * ratio;
+    const h = img.height * ratio;
+    sctx.drawImage(img, (SS - w) / 2, (SS - h) / 2, w, h);
+    const data = sctx.getImageData(0, 0, SS, SS).data;
+    const opaque = [];
+    for (let y = 0; y < SS; y++) {
+      for (let x = 0; x < SS; x++) {
+        if (data[(y * SS + x) * 4 + 3] > 80) opaque.push([x, y]);
+      }
+    }
+    if (!opaque.length) {
+      showToast('No opaque pixels found in PNG');
+      return [];
+    }
+    const targets = [];
+    const scale = STAGE_SIZE / SS;
+    for (let i = 0; i < count; i++) {
+      const p = opaque[Math.floor(Math.random() * opaque.length)];
+      targets.push({
+        x: (p[0] + (Math.random() - 0.5) * 1.2) * scale,
+        y: (p[1] + (Math.random() - 0.5) * 1.2) * scale,
+      });
+    }
+    return targets;
+  }
+
+  function initDots() {
+    state.dots = [];
+    const n = state.targetsA.length;
+    const maxR = STAGE_SIZE * 0.42; // keep scatter inside the visible canvas
+    for (let i = 0; i < n; i++) {
+      const ta = state.targetsA[i];
+      const tb = state.imgB && state.targetsB[i] ? state.targetsB[i] : null;
+      const angle = Math.random() * Math.PI * 2;
+      const dist = maxR * (0.4 + Math.random() * 0.6);
+      const sx = STAGE_SIZE / 2 + Math.cos(angle) * dist;
+      const sy = STAGE_SIZE / 2 + Math.sin(angle) * dist;
+      state.dots.push({
+        x: sx, y: sy,
+        startX: sx, startY: sy,
+        ax: ta.x, ay: ta.y,
+        bx: tb ? tb.x : null, by: tb ? tb.y : null,
+        scatterX: 0, scatterY: 0,
+        delay: Math.random() * 0.3,
+      });
+    }
+  }
+
+  // Place all dots immediately at the A or B target (used to start direct mode formed)
+  function placeDotsAt(which) {
+    for (const d of state.dots) {
+      if (which === 'a') { d.x = d.ax; d.y = d.ay; d.startX = d.ax; d.startY = d.ay; }
+      else if (which === 'b' && d.bx !== null) { d.x = d.bx; d.y = d.by; d.startX = d.bx; d.startY = d.by; }
+    }
+  }
+
+  function pickScatterTargets() {
+    const maxR = STAGE_SIZE * 0.42;
+    for (const d of state.dots) {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = maxR * (0.4 + Math.random() * 0.6);
+      d.startX = d.x; d.startY = d.y;
+      d.scatterX = STAGE_SIZE / 2 + Math.cos(angle) * dist;
+      d.scatterY = STAGE_SIZE / 2 + Math.sin(angle) * dist;
+    }
+  }
+
+  function snapshotStart() {
+    for (const d of state.dots) { d.startX = d.x; d.startY = d.y; }
+  }
+
+  function easeInOut(t) {
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  }
+
+  function drawDotsTo(targetCtx) {
+    targetCtx.clearRect(0, 0, STAGE_SIZE, STAGE_SIZE);
+    targetCtx.fillStyle = state.color;
+    const r = state.dotSize;
+    for (const d of state.dots) {
+      targetCtx.beginPath();
+      targetCtx.arc(d.x, d.y, r, 0, Math.PI * 2);
+      targetCtx.fill();
+    }
+  }
+
+  function phaseDisplayName(p) {
+    return {
+      'forming': 'forming',
+      'holding': 'holding',
+      'dispersing': 'dispersing',
+      'scattered': 'scattered',
+      'at-a': 'at start',
+      'morphing-ab': 'morphing → end',
+      'at-b': 'at end',
+      'morphing-ba': 'morphing → start',
+      'forming-a': 'forming start',
+      'holding-a': 'holding start',
+      'holding-b': 'holding end',
+      'disperse-out': 'dispersing',
+      'disperse-cloud': 'cloud',
+      'disperse-in': 'forming end',
+      'disperse-out-b': 'dispersing',
+      'disperse-cloud-b': 'cloud',
+      'disperse-in-a': 'forming start',
+    }[p] || p;
+  }
+
+  const DUR = {
+    // single-image (no B)
+    'forming': 1, 'holding': 0.8, 'dispersing': 1, 'scattered': 0.4,
+    // direct (start formed)
+    'at-a': 0.7, 'morphing-ab': 1.2, 'at-b': 0.7, 'morphing-ba': 1.2,
+    // disperse (still forms first time)
+    'forming-a': 1, 'holding-a': 0.8, 'holding-b': 0.8,
+    'disperse-out': 0.9, 'disperse-cloud': 0.4, 'disperse-in': 0.9,
+    'disperse-out-b': 0.9, 'disperse-cloud-b': 0.4, 'disperse-in-a': 0.9,
+  };
+
+  function nextPhase() {
+    const p = state.phase;
+    if (!state.imgB) {
+      // Single-image: still forms from scatter
+      if (p === 'forming') return 'holding';
+      if (p === 'holding') { pickScatterTargets(); return 'dispersing'; }
+      if (p === 'dispersing') return 'scattered';
+      if (p === 'scattered') { snapshotStart(); return 'forming'; }
+    } else if (state.mode === 'direct') {
+      // Direct mode: A → morph → B → morph back → A. No scatter ever.
+      if (p === 'at-a') { snapshotStart(); return 'morphing-ab'; }
+      if (p === 'morphing-ab') return 'at-b';
+      if (p === 'at-b') { snapshotStart(); return 'morphing-ba'; }
+      if (p === 'morphing-ba') return 'at-a';
+    } else {
+      // Disperse mode (kept as before)
+      if (p === 'forming-a') return 'holding-a';
+      if (p === 'holding-a') { pickScatterTargets(); return 'disperse-out'; }
+      if (p === 'disperse-out') return 'disperse-cloud';
+      if (p === 'disperse-cloud') { snapshotStart(); return 'disperse-in'; }
+      if (p === 'disperse-in') return 'holding-b';
+      if (p === 'holding-b') { pickScatterTargets(); return 'disperse-out-b'; }
+      if (p === 'disperse-out-b') return 'disperse-cloud-b';
+      if (p === 'disperse-cloud-b') { snapshotStart(); return 'disperse-in-a'; }
+      if (p === 'disperse-in-a') return 'forming-a';
+    }
+    return p;
+  }
+
+  function updateDots() {
+    const p = state.phase;
+    const t = Math.min(1, state.phaseT / (DUR[p] || 1));
+    const e = easeInOut(t);
+
+    for (const d of state.dots) {
+      if (p === 'forming' || p === 'forming-a' || p === 'disperse-in-a') {
+        const raw = (t - d.delay) / (1 - d.delay);
+        const tt = Math.max(0, Math.min(1, raw));
+        const ee = easeInOut(tt);
+        d.x = d.startX + (d.ax - d.startX) * ee;
+        d.y = d.startY + (d.ay - d.startY) * ee;
+      } else if (p === 'disperse-in') {
+        const raw = (t - d.delay) / (1 - d.delay);
+        const tt = Math.max(0, Math.min(1, raw));
+        const ee = easeInOut(tt);
+        d.x = d.startX + (d.bx - d.startX) * ee;
+        d.y = d.startY + (d.by - d.startY) * ee;
+      } else if (p === 'morphing-ab') {
+        d.x = d.startX + (d.bx - d.startX) * e;
+        d.y = d.startY + (d.by - d.startY) * e;
+      } else if (p === 'morphing-ba') {
+        d.x = d.startX + (d.ax - d.startX) * e;
+        d.y = d.startY + (d.ay - d.startY) * e;
+      } else if (p === 'at-a' || p === 'holding' || p === 'holding-a') {
+        d.x = d.ax + (Math.random() - 0.5) * 0.3;
+        d.y = d.ay + (Math.random() - 0.5) * 0.3;
+      } else if (p === 'at-b' || p === 'holding-b') {
+        d.x = d.bx + (Math.random() - 0.5) * 0.3;
+        d.y = d.by + (Math.random() - 0.5) * 0.3;
+      } else if (p === 'dispersing' || p === 'disperse-out' || p === 'disperse-out-b') {
+        const raw = (t - d.delay) / (1 - d.delay);
+        const tt = Math.max(0, Math.min(1, raw));
+        const ee = easeInOut(tt);
+        d.x = d.startX + (d.scatterX - d.startX) * ee;
+        d.y = d.startY + (d.scatterY - d.startY) * ee;
+      } else if (p === 'scattered' || p === 'disperse-cloud' || p === 'disperse-cloud-b') {
+        d.x += (Math.random() - 0.5) * 0.5;
+        d.y += (Math.random() - 0.5) * 0.5;
+        const dx = d.x - STAGE_SIZE / 2;
+        const dy = d.y - STAGE_SIZE / 2;
+        const r = Math.sqrt(dx * dx + dy * dy);
+        const limit = STAGE_SIZE * 0.45;
+        if (r > limit) {
+          d.x = STAGE_SIZE / 2 + (dx / r) * limit;
+          d.y = STAGE_SIZE / 2 + (dy / r) * limit;
+        }
+      }
+    }
+  }
+
+  function tick(now) {
+    state.rafId = requestAnimationFrame(tick);
+    const dt = Math.min(100, now - state.lastTime) / 1000;
+    state.lastTime = now;
+
+    if (state.playing && state.targetsA.length) {
+      const phaseRate = 0.15 + (state.speed - 1) * 0.13;
+      state.phaseT += dt * phaseRate;
+      if (state.phaseT >= (DUR[state.phase] || 1)) {
+        state.phase = nextPhase();
+        state.phaseT = 0;
+      }
+      updateDots();
+      phaseName.textContent = phaseDisplayName(state.phase);
+      stageStats.textContent = state.dots.length + ' dots';
+    }
+
+    drawDotsTo(ctx);
+  }
+
+  let toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('visible'), 2000);
+  }
+
+  // Recompute canvas display size on window resize
+  window.addEventListener('resize', applyCanvasScale);
+
+  function showCodeModal() {
+    const code = buildExportCode();
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop';
+    backdrop.innerHTML = `
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <div class="modal-title">Drop-in module</div>
+          <button class="button" id="modal-close">Close</button>
+        </div>
+        <p class="modal-desc">
+          Save as <code>dotMorph.js</code>. Import into any HTML or React project.
+          Usage example is in the comment header.
+        </p>
+        <textarea class="code-block" id="code-text" readonly></textarea>
+        <div class="button-row">
+          <button class="button primary" id="copy-code">Copy to clipboard</button>
+          <button class="button" id="download-code">Download .js</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(backdrop);
+    backdrop.addEventListener('click', () => backdrop.remove());
+    backdrop.querySelector('#code-text').value = code;
+    backdrop.querySelector('#modal-close').addEventListener('click', () => backdrop.remove());
+    backdrop.querySelector('#copy-code').addEventListener('click', () => {
+      const ta = backdrop.querySelector('#code-text');
+      ta.select();
+      try { navigator.clipboard.writeText(code); } catch(e) { document.execCommand('copy'); }
+      backdrop.querySelector('#copy-code').textContent = 'Copied ✓';
+      setTimeout(() => { backdrop.querySelector('#copy-code').textContent = 'Copy to clipboard'; }, 1400);
+    });
+    backdrop.querySelector('#download-code').addEventListener('click', () => {
+      const blob = new Blob([code], { type: 'text/javascript' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'dotMorph.js';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast('Module downloaded');
+    });
+  }
+
+  function buildExportCode() {
+    return `/**
+ * DotMorph — animated dot-formation avatar
+ * Generated from Dot Morph Studio v1.2
+ *
+ * Usage:
+ *   import { DotMorph } from './dotMorph.js';
+ *   const dm = new DotMorph(document.querySelector('canvas'), {
+ *     startSrc: '/avatars/running.png',
+ *     endSrc:   '/avatars/standing.png',  // optional
+ *     dotCount: ${state.dotCount},
+ *     dotSize:  ${state.dotSize},
+ *     color:    '${state.color}',
+ *     speed:    ${state.speed},
+ *     mode:     '${state.mode}',          // 'direct' starts with start shape formed
+ *     size:     ${STAGE_SIZE},
+ *   });
+ *   await dm.load();
+ *   dm.start();
+ *
+ * Runtime updates:
+ *   dm.setColor('#FF6633'); dm.setSpeed(8); dm.setDotSize(4);
+ *   dm.setDotCount(800); dm.setMode('disperse');
+ *   dm.pause(); dm.resume();
+ *   dm.exportPNG(); dm.destroy();
+ */
+export class DotMorph {
+  constructor(canvas, opts = {}) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.size = opts.size || 560;
+    this.canvas.width = this.size;
+    this.canvas.height = this.size;
+    this.startSrc = opts.startSrc;
+    this.endSrc = opts.endSrc || null;
+    this.dotCount = opts.dotCount || 700;
+    this.dotSize = opts.dotSize || 3;
+    this.color = opts.color || '#C8533D';
+    this.speed = opts.speed || 5;
+    this.mode = opts.mode || 'direct';
+    this.imgA = null; this.imgB = null;
+    this.targetsA = []; this.targetsB = [];
+    this.dots = [];
+    this.phase = 'at-a';
+    this.phaseT = 0;
+    this.playing = false;
+    this.rafId = null;
+    this.lastTime = 0;
+  }
+
+  async load() {
+    this.imgA = await this._loadImage(this.startSrc);
+    this.targetsA = this._extractTargets(this.imgA, this.dotCount);
+    if (this.endSrc) {
+      this.imgB = await this._loadImage(this.endSrc);
+      this.targetsB = this._extractTargets(this.imgB, this.dotCount);
+    }
+    this._initDots();
+    if (this.mode === 'direct' && this.imgB) {
+      this._placeAt('a');
+      this.phase = 'at-a';
+    } else {
+      this.phase = this.imgB ? 'forming-a' : 'forming';
+    }
+    this.phaseT = 0;
+  }
+
+  start() {
+    this.playing = true;
+    this.lastTime = performance.now();
+    if (!this.rafId) this._tick(this.lastTime);
+  }
+
+  pause() { this.playing = false; }
+  resume() { if (!this.playing) { this.playing = true; this.lastTime = performance.now(); } }
+  setColor(c) { this.color = c; }
+  setSpeed(s) { this.speed = s; }
+  setDotSize(s) { this.dotSize = s; }
+
+  setMode(m) {
+    this.mode = m;
+    this._initDots();
+    if (m === 'direct' && this.imgB) { this._placeAt('a'); this.phase = 'at-a'; }
+    else this.phase = this.imgB ? 'forming-a' : 'forming';
+    this.phaseT = 0;
+  }
+
+  setDotCount(n) {
+    this.dotCount = n;
+    if (this.imgA) this.targetsA = this._extractTargets(this.imgA, n);
+    if (this.imgB) this.targetsB = this._extractTargets(this.imgB, n);
+    this._initDots();
+    if (this.mode === 'direct' && this.imgB) { this._placeAt('a'); this.phase = 'at-a'; }
+    else this.phase = this.imgB ? 'forming-a' : 'forming';
+    this.phaseT = 0;
+  }
+
+  exportPNG(filename = 'dot-avatar.png') {
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = this.canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  destroy() {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.rafId = null;
+    this.playing = false;
+  }
+
+  _loadImage(src) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => res(img);
+      img.onerror = rej;
+      img.src = src;
+    });
+  }
+
+  _extractTargets(img, count) {
+    const SS = 240;
+    const c = document.createElement('canvas');
+    c.width = SS; c.height = SS;
+    const cx = c.getContext('2d');
+    const r = Math.min(SS / img.width, SS / img.height) * 0.7;
+    const w = img.width * r, h = img.height * r;
+    cx.drawImage(img, (SS - w) / 2, (SS - h) / 2, w, h);
+    const data = cx.getImageData(0, 0, SS, SS).data;
+    const op = [];
+    for (let y = 0; y < SS; y++)
+      for (let x = 0; x < SS; x++)
+        if (data[(y * SS + x) * 4 + 3] > 80) op.push([x, y]);
+    if (!op.length) return [];
+    const targets = [];
+    const s = this.size / SS;
+    for (let i = 0; i < count; i++) {
+      const p = op[Math.floor(Math.random() * op.length)];
+      targets.push({
+        x: (p[0] + (Math.random() - 0.5) * 1.2) * s,
+        y: (p[1] + (Math.random() - 0.5) * 1.2) * s,
+      });
+    }
+    return targets;
+  }
+
+  _initDots() {
+    this.dots = [];
+    const maxR = this.size * 0.42;
+    for (let i = 0; i < this.targetsA.length; i++) {
+      const ta = this.targetsA[i];
+      const tb = this.imgB && this.targetsB[i] ? this.targetsB[i] : null;
+      const a = Math.random() * Math.PI * 2;
+      const d = maxR * (0.4 + Math.random() * 0.6);
+      const sx = this.size / 2 + Math.cos(a) * d;
+      const sy = this.size / 2 + Math.sin(a) * d;
+      this.dots.push({
+        x: sx, y: sy, startX: sx, startY: sy,
+        ax: ta.x, ay: ta.y,
+        bx: tb ? tb.x : null, by: tb ? tb.y : null,
+        scatterX: 0, scatterY: 0,
+        delay: Math.random() * 0.3,
+      });
+    }
+  }
+
+  _placeAt(which) {
+    for (const d of this.dots) {
+      if (which === 'a') { d.x = d.ax; d.y = d.ay; d.startX = d.ax; d.startY = d.ay; }
+      else if (which === 'b' && d.bx !== null) { d.x = d.bx; d.y = d.by; d.startX = d.bx; d.startY = d.by; }
+    }
+  }
+
+  _pickScatter() {
+    const maxR = this.size * 0.42;
+    for (const d of this.dots) {
+      const a = Math.random() * Math.PI * 2;
+      const r = maxR * (0.4 + Math.random() * 0.6);
+      d.startX = d.x; d.startY = d.y;
+      d.scatterX = this.size / 2 + Math.cos(a) * r;
+      d.scatterY = this.size / 2 + Math.sin(a) * r;
+    }
+  }
+
+  _snap() { for (const d of this.dots) { d.startX = d.x; d.startY = d.y; } }
+  _ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+  _phaseDur(p) {
+    const D = {
+      'forming': 1, 'holding': 0.8, 'dispersing': 1, 'scattered': 0.4,
+      'at-a': 0.7, 'morphing-ab': 1.2, 'at-b': 0.7, 'morphing-ba': 1.2,
+      'forming-a': 1, 'holding-a': 0.8, 'holding-b': 0.8,
+      'disperse-out': 0.9, 'disperse-cloud': 0.4, 'disperse-in': 0.9,
+      'disperse-out-b': 0.9, 'disperse-cloud-b': 0.4, 'disperse-in-a': 0.9,
+    };
+    return D[p] || 1;
+  }
+
+  _nextPhase() {
+    const p = this.phase;
+    if (!this.imgB) {
+      if (p === 'forming') return 'holding';
+      if (p === 'holding') { this._pickScatter(); return 'dispersing'; }
+      if (p === 'dispersing') return 'scattered';
+      if (p === 'scattered') { this._snap(); return 'forming'; }
+    } else if (this.mode === 'direct') {
+      if (p === 'at-a') { this._snap(); return 'morphing-ab'; }
+      if (p === 'morphing-ab') return 'at-b';
+      if (p === 'at-b') { this._snap(); return 'morphing-ba'; }
+      if (p === 'morphing-ba') return 'at-a';
+    } else {
+      if (p === 'forming-a') return 'holding-a';
+      if (p === 'holding-a') { this._pickScatter(); return 'disperse-out'; }
+      if (p === 'disperse-out') return 'disperse-cloud';
+      if (p === 'disperse-cloud') { this._snap(); return 'disperse-in'; }
+      if (p === 'disperse-in') return 'holding-b';
+      if (p === 'holding-b') { this._pickScatter(); return 'disperse-out-b'; }
+      if (p === 'disperse-out-b') return 'disperse-cloud-b';
+      if (p === 'disperse-cloud-b') { this._snap(); return 'disperse-in-a'; }
+      if (p === 'disperse-in-a') return 'forming-a';
+    }
+    return p;
+  }
+
+  _updateDots() {
+    const p = this.phase;
+    const t = Math.min(1, this.phaseT / this._phaseDur(p));
+    const e = this._ease(t);
+    for (const d of this.dots) {
+      if (p === 'forming' || p === 'forming-a' || p === 'disperse-in-a') {
+        const tt = Math.max(0, Math.min(1, (t - d.delay) / (1 - d.delay)));
+        const ee = this._ease(tt);
+        d.x = d.startX + (d.ax - d.startX) * ee;
+        d.y = d.startY + (d.ay - d.startY) * ee;
+      } else if (p === 'disperse-in') {
+        const tt = Math.max(0, Math.min(1, (t - d.delay) / (1 - d.delay)));
+        const ee = this._ease(tt);
+        d.x = d.startX + (d.bx - d.startX) * ee;
+        d.y = d.startY + (d.by - d.startY) * ee;
+      } else if (p === 'morphing-ab') {
+        d.x = d.startX + (d.bx - d.startX) * e;
+        d.y = d.startY + (d.by - d.startY) * e;
+      } else if (p === 'morphing-ba') {
+        d.x = d.startX + (d.ax - d.startX) * e;
+        d.y = d.startY + (d.ay - d.startY) * e;
+      } else if (p === 'at-a' || p === 'holding' || p === 'holding-a') {
+        d.x = d.ax + (Math.random() - 0.5) * 0.3;
+        d.y = d.ay + (Math.random() - 0.5) * 0.3;
+      } else if (p === 'at-b' || p === 'holding-b') {
+        d.x = d.bx + (Math.random() - 0.5) * 0.3;
+        d.y = d.by + (Math.random() - 0.5) * 0.3;
+      } else if (p === 'dispersing' || p === 'disperse-out' || p === 'disperse-out-b') {
+        const tt = Math.max(0, Math.min(1, (t - d.delay) / (1 - d.delay)));
+        const ee = this._ease(tt);
+        d.x = d.startX + (d.scatterX - d.startX) * ee;
+        d.y = d.startY + (d.scatterY - d.startY) * ee;
+      } else if (p === 'scattered' || p === 'disperse-cloud' || p === 'disperse-cloud-b') {
+        d.x += (Math.random() - 0.5) * 0.5;
+        d.y += (Math.random() - 0.5) * 0.5;
+        const dx = d.x - this.size / 2;
+        const dy = d.y - this.size / 2;
+        const r = Math.sqrt(dx * dx + dy * dy);
+        const limit = this.size * 0.45;
+        if (r > limit) {
+          d.x = this.size / 2 + (dx / r) * limit;
+          d.y = this.size / 2 + (dy / r) * limit;
+        }
+      }
+    }
+  }
+
+  _draw() {
+    this.ctx.clearRect(0, 0, this.size, this.size);
+    this.ctx.fillStyle = this.color;
+    for (const d of this.dots) {
+      this.ctx.beginPath();
+      this.ctx.arc(d.x, d.y, this.dotSize, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+  }
+
+  _tick(now) {
+    this.rafId = requestAnimationFrame(t => this._tick(t));
+    const dt = Math.min(100, now - this.lastTime) / 1000;
+    this.lastTime = now;
+    if (this.playing && this.targetsA.length) {
+      const rate = 0.15 + (this.speed - 1) * 0.13;
+      this.phaseT += dt * rate;
+      if (this.phaseT >= this._phaseDur(this.phase)) {
+        this.phase = this._nextPhase();
+        this.phaseT = 0;
+      }
+      this._updateDots();
+    }
+    this._draw();
+  }
+}
+`;
+  }
+
+  applyCanvasScale();
+  state.lastTime = performance.now();
+})();
+</script>
+</body>
+</html>
