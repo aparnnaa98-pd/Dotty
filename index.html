@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dot Morph Studio</title>
+<title>Dotty</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;375;425;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -69,61 +69,25 @@
     border-bottom: 0.5px solid var(--line);
   }
 
-  .brand {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-  }
+  .brand { display: flex; align-items: baseline; gap: 14px; }
 
-  .brand-mark {
-    width: 28px;
-    height: 28px;
-    position: relative;
-    align-self: center;
-  }
-
-  .brand-mark span {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background: var(--ink);
-    border-radius: 50%;
-  }
+  .brand-mark { width: 28px; height: 28px; position: relative; align-self: center; }
+  .brand-mark span { position: absolute; width: 5px; height: 5px; background: var(--ink); border-radius: 50%; }
   .brand-mark span:nth-child(1) { top: 2px; left: 11px; }
   .brand-mark span:nth-child(2) { top: 11px; left: 2px; }
   .brand-mark span:nth-child(3) { top: 11px; left: 11px; background: var(--accent); }
   .brand-mark span:nth-child(4) { top: 11px; left: 20px; }
   .brand-mark span:nth-child(5) { top: 20px; left: 11px; }
 
-  .brand-name {
-    font-family: var(--display);
-    font-size: 26px;
-    font-weight: 425;
-    letter-spacing: -0.02em;
-  }
-
-  .brand-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-faint);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding-bottom: 4px;
-  }
-
-  .header-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-faint);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
+  .brand-name { font-family: var(--display); font-size: 26px; font-weight: 425; letter-spacing: -0.02em; }
+  .brand-tag { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.05em; text-transform: uppercase; padding-bottom: 4px; }
+  .header-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.05em; text-transform: uppercase; }
 
   .workspace {
     display: grid;
-    grid-template-columns: 220px 1fr 280px;
+    grid-template-columns: 240px 1fr 280px;
     gap: 20px;
-    align-items: start;
+    align-items: stretch;
   }
 
   .panel {
@@ -135,775 +99,301 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-  }
-
-  .panel-title {
-    font-family: var(--display);
-    font-size: 14px;
-    font-weight: 425;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .panel-title::before {
-    content: '';
-    width: 3px;
-    height: 3px;
-    background: var(--accent);
-    border-radius: 50%;
-  }
-
-  .section {
-    padding-bottom: 14px;
-    border-bottom: 0.5px solid var(--line);
-  }
-
-  .section:last-of-type { border-bottom: none; padding-bottom: 0; }
-
-  .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-faint);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  /* Compact frame rows — horizontal layout */
-  .frame-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px;
-    background: var(--bg-warm);
-    border: 0.5px dashed var(--line-strong);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    position: relative;
-  }
-
-  .frame-row:hover {
-    border-color: var(--accent);
-    background: var(--surface);
-  }
-
-  .frame-row.filled {
-    border-style: solid;
-    background: var(--surface);
-  }
-
-  .frame-row.dragover {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
-
-  .frame-preview {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    background: var(--bg-warm);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .frame-row.filled .frame-preview {
-    background: var(--bg);
-  }
-
-  .frame-preview img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-  }
-
-  .frame-preview svg {
-    opacity: 0.4;
-  }
-
-  .frame-info {
-    flex: 1;
     min-width: 0;
   }
 
-  .frame-label {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--ink-faint);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  .panel-title { font-family: var(--display); font-size: 14px; font-weight: 425; color: var(--ink); letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+  .panel-title::before { content: ''; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; }
+
+  .section { padding-bottom: 14px; border-bottom: 0.5px solid var(--line); }
+  .section:last-of-type { border-bottom: none; padding-bottom: 0; }
+  .section-label { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+
+  /* Set name */
+  .set-name-input {
+    width: 100%;
+    font-family: var(--display);
+    font-size: 13px;
     font-weight: 425;
-    margin-bottom: 2px;
-  }
-
-  .frame-status {
-    font-size: 11px;
-    color: var(--ink-soft);
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .frame-row.filled .frame-status {
     color: var(--ink);
-  }
-
-  .frame-clear {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
     background: var(--surface);
     border: 0.5px solid var(--line-strong);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    outline: none;
     transition: all 0.15s;
-    flex-shrink: 0;
+    letter-spacing: -0.01em;
   }
+  .set-name-input::placeholder { color: var(--ink-faint); font-weight: 375; }
+  .set-name-input:hover { border-color: var(--ink-faint); }
+  .set-name-input:focus { border-color: var(--ink); background: var(--surface); }
 
+  /* Frame rows */
+  .frame-row {
+    display: flex; align-items: center; gap: 10px; padding: 8px;
+    background: var(--bg-warm); border: 0.5px dashed var(--line-strong);
+    border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s ease; position: relative;
+  }
+  .frame-row:hover { border-color: var(--accent); background: var(--surface); }
+  .frame-row.filled { border-style: solid; background: var(--surface); }
+  .frame-row.dragover { border-color: var(--accent); background: var(--accent-soft); }
+  .frame-preview { width: 36px; height: 36px; flex-shrink: 0; background: var(--bg-warm); border-radius: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .frame-row.filled .frame-preview { background: var(--bg); }
+  .frame-preview img { max-width: 90%; max-height: 90%; object-fit: contain; }
+  .frame-preview svg { opacity: 0.4; }
+  .frame-info { flex: 1; min-width: 0; }
+  .frame-label { font-family: var(--mono); font-size: 9px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 425; margin-bottom: 2px; }
+  .frame-status { font-size: 11px; color: var(--ink-soft); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .frame-row.filled .frame-status { color: var(--ink); }
+  .frame-clear { width: 18px; height: 18px; border-radius: 50%; background: var(--surface); border: 0.5px solid var(--line-strong); display: none; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
   .frame-clear svg { width: 8px; height: 8px; stroke: var(--ink-soft); }
   .frame-clear:hover { background: var(--ink); border-color: var(--ink); }
   .frame-clear:hover svg { stroke: var(--surface); }
   .frame-row.filled:hover .frame-clear { display: flex; }
 
-  /* iPhone mockup */
+  .frames-list { display: flex; flex-direction: column; gap: 8px; }
+  .add-frame-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%; padding: 9px; margin-top: 2px;
+    font-family: var(--body); font-size: 12px; font-weight: 375;
+    color: var(--ink-soft); background: transparent;
+    border: 0.5px dashed var(--line-strong); border-radius: var(--radius-sm);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .add-frame-btn:hover { border-color: var(--accent); color: var(--accent); border-style: solid; }
+  .add-frame-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .add-frame-btn:disabled:hover { border-color: var(--line-strong); color: var(--ink-soft); border-style: dashed; }
+
+  /* Mode toggle */
+  .mode-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--bg-warm); border-radius: var(--radius-sm); padding: 3px; }
+  .mode-btn { padding: 8px 10px; font-family: var(--body); font-size: 11px; background: transparent; border: none; border-radius: 4px; cursor: pointer; color: var(--ink-soft); transition: all 0.15s; font-weight: 375; }
+  .mode-btn:hover { color: var(--ink); }
+  .mode-btn.active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-sm); }
+  .mode-hint { font-size: 11px; color: var(--ink-faint); margin-top: 8px; line-height: 1.5; font-family: var(--body); font-weight: 375; }
+
+  /* Saved sets */
+  .sets-section { padding-top: 10px; border-top: 0.5px solid var(--line); }
+  .sets-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .sets-title { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; }
+  .sets-new { display: flex; align-items: center; gap: 4px; background: transparent; border: 0.5px solid var(--line-strong); border-radius: 4px; padding: 3px 8px; font-family: var(--body); font-size: 10px; font-weight: 425; color: var(--ink-soft); cursor: pointer; transition: all 0.15s; }
+  .sets-new:hover { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .sets-list { display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto; margin: 0 -4px; padding: 0 4px; }
+  .sets-list::-webkit-scrollbar { width: 4px; }
+  .sets-list::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 2px; }
+  .set-card { display: flex; align-items: center; gap: 8px; padding: 6px; background: var(--bg-warm); border: 0.5px solid transparent; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+  .set-card:hover { background: var(--surface); border-color: var(--line-strong); }
+  .set-card.active { background: var(--surface); border-color: var(--ink); }
+  .set-card-thumbs { display: flex; gap: 3px; flex-shrink: 0; }
+  .set-card-thumb { width: 22px; height: 22px; background: var(--bg); border-radius: 3px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 0.5px solid var(--line); }
+  .set-card-thumb img { max-width: 85%; max-height: 85%; object-fit: contain; }
+  .set-card-thumb.empty { border-style: dashed; opacity: 0.5; }
+  .set-card-info { flex: 1; min-width: 0; }
+  .set-card-name { font-size: 11px; font-weight: 425; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+  .set-card-meta { font-family: var(--mono); font-size: 9px; color: var(--ink-faint); letter-spacing: 0.04em; margin-top: 1px; }
+  .set-card-delete { width: 18px; height: 18px; border-radius: 4px; background: transparent; border: none; display: none; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; color: var(--ink-faint); transition: all 0.15s; }
+  .set-card:hover .set-card-delete { display: flex; }
+  .set-card-delete:hover { color: var(--accent); background: var(--accent-soft); }
+  .set-card-delete svg { width: 10px; height: 10px; }
+  .sets-empty { font-family: var(--body); font-size: 11px; color: var(--ink-faint); text-align: center; padding: 12px 8px; font-style: italic; }
+
+  /* ===== Center stage ===== */
   .stage-panel {
-    padding: 32px 20px;
+    padding: 24px;
     background: linear-gradient(180deg, var(--bg-warm) 0%, var(--surface) 100%);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 640px;
+    justify-content: flex-start;
+    gap: 16px;
   }
 
-  .phone {
+  /* Plain rectangle "screen" with phone proportions, no chrome */
+  .screen {
     width: 280px;
-    aspect-ratio: 280 / 580;
-    background: var(--ink);
-    border-radius: 44px;
-    padding: 8px;
+    aspect-ratio: 9 / 19.5;
+    background: var(--screen-bg, var(--bg));
+    border-radius: 28px;
     position: relative;
-    box-shadow:
-      0 0 0 1.5px rgba(0,0,0,0.4),
-      0 30px 60px rgba(26, 24, 21, 0.18),
-      0 12px 24px rgba(26, 24, 21, 0.10);
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(26,24,21,0.12), 0 0 0 1px var(--line);
+    transition: background 0.4s ease;
+    flex-shrink: 0;
   }
 
-  /* Side buttons */
-  .phone::before {
-    content: '';
+  .screen-bg-img {
     position: absolute;
-    left: -2px;
-    top: 110px;
-    width: 3px;
-    height: 26px;
-    background: #2a2825;
-    border-radius: 2px 0 0 2px;
-  }
-
-  .phone-volume {
-    position: absolute;
-    left: -2px;
-    top: 150px;
-    width: 3px;
-    height: 56px;
-    background: #2a2825;
-    border-radius: 2px 0 0 2px;
-  }
-
-  .phone-power {
-    position: absolute;
-    right: -2px;
-    top: 130px;
-    width: 3px;
-    height: 70px;
-    background: #2a2825;
-    border-radius: 0 2px 2px 0;
-  }
-
-  .phone-screen {
+    inset: 0;
     width: 100%;
     height: 100%;
-    background: var(--bg);
-    border-radius: 36px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    object-fit: cover;
+    z-index: 0;
+    display: none;
   }
+  .screen.has-bg .screen-bg-img { display: block; }
 
-  /* Dynamic island */
-  .phone-island {
+  /* draggable / resizable composition container */
+  .comp {
     position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90px;
-    height: 26px;
-    background: #000;
-    border-radius: 14px;
-    z-index: 10;
-  }
-
-  /* Status bar */
-  .phone-status {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 46px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 28px 0;
-    z-index: 5;
-    font-family: var(--display);
-    font-size: 12px;
-    font-weight: 425;
-    color: var(--ink);
-  }
-
-  .phone-status-right {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
-
-  .phone-status-right svg { width: 14px; height: 10px; }
-
-  /* Canvas area within the phone */
-  .phone-canvas-wrap {
-    flex: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .phone-canvas-wrap canvas {
-    display: block;
-    /* size controlled inline via JS */
-  }
-
-  .phone-empty {
-    color: var(--ink-faint);
-    font-size: 11px;
-    text-align: center;
-    padding: 20px;
-    line-height: 1.6;
-    max-width: 200px;
-  }
-
-  .phone-empty .display {
-    font-family: var(--display);
-    font-size: 15px;
-    color: var(--ink);
-    font-weight: 425;
-    letter-spacing: -0.01em;
-    margin-bottom: 6px;
-    display: block;
-  }
-
-  .phone-empty svg {
-    display: block;
-    margin: 0 auto 12px;
-    opacity: 0.3;
-  }
-
-  /* Home indicator */
-  .phone-home {
-    position: absolute;
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background: var(--ink);
-    border-radius: 2px;
-    opacity: 0.35;
-    z-index: 10;
-  }
-
-  /* Meta below phone */
-  .phone-meta {
-    margin-top: 18px;
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-faint);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .phone-meta .phase-dot {
-    display: inline-block;
-    width: 5px;
-    height: 5px;
-    background: var(--accent);
-    border-radius: 50%;
-    margin-right: 6px;
-    vertical-align: middle;
-    animation: pulse 1.4s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-
-  /* Controls */
-  .control {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .control:last-child { margin-bottom: 0; }
-
-  .control label {
-    font-size: 12px;
-    color: var(--ink-soft);
-    flex: 0 0 78px;
-    font-weight: 375;
-  }
-
-  .control input[type="range"] {
-    flex: 1;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 3px;
-    background: var(--line);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .control input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    background: var(--ink);
-    border-radius: 50%;
+    z-index: 2;
     cursor: grab;
-    transition: transform 0.1s;
+    touch-action: none;
   }
+  .comp.dragging { cursor: grabbing; }
+  .comp canvas { display: block; width: 100%; height: 100%; }
 
-  .control input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-  .control input[type="range"]::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(0.95); }
-
-  .control input[type="range"]::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
-    background: var(--ink);
-    border-radius: 50%;
-    border: none;
-    cursor: grab;
-  }
-
-  .readout {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 425;
-    min-width: 40px;
-    text-align: right;
-    color: var(--ink);
-  }
-
-  .mode-toggle {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    background: var(--bg-warm);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-  }
-
-  .mode-btn {
-    padding: 8px 10px;
-    font-family: var(--body);
-    font-size: 11px;
-    background: transparent;
-    border: none;
+  .comp-outline {
+    position: absolute;
+    inset: 0;
+    border: 1px dashed transparent;
     border-radius: 4px;
-    cursor: pointer;
-    color: var(--ink-soft);
-    transition: all 0.15s;
-    font-weight: 375;
-  }
-
-  .mode-btn:hover { color: var(--ink); }
-  .mode-btn.active {
-    background: var(--surface);
-    color: var(--ink);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .mode-hint {
-    font-size: 11px;
-    color: var(--ink-faint);
-    margin-top: 8px;
-    line-height: 1.5;
-    font-family: var(--body);
-    font-weight: 375;
-  }
-
-  .swatches {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-
-  .check-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--ink-soft);
-    cursor: pointer;
-    user-select: none;
-    margin-bottom: 10px;
-  }
-
-  .check-row input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
-    border: 0.5px solid var(--line-strong);
-    border-radius: 3px;
-    background: var(--surface);
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0;
-    transition: all 0.15s;
-  }
-
-  .check-row input[type="checkbox"]:checked {
-    background: var(--ink);
-    border-color: var(--ink);
-  }
-
-  .check-row input[type="checkbox"]:checked::after {
-    content: '';
-    position: absolute;
-    left: 3px;
-    top: 0.5px;
-    width: 4px;
-    height: 8px;
-    border: solid var(--surface);
-    border-width: 0 1.5px 1.5px 0;
-    transform: rotate(45deg);
-  }
-
-  .export-opt {
-    margin-bottom: 4px;
-  }
-
-  .swatch {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 0.5px solid var(--line);
-    transition: transform 0.1s;
-    position: relative;
-  }
-
-  .swatch:hover { transform: scale(1.12); }
-  .swatch.active::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border: 1px solid var(--ink);
-    border-radius: 50%;
-  }
-
-  .color-input-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .color-input-row input[type="color"] {
-    width: 36px;
-    height: 36px;
-    border: 0.5px solid var(--line);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    padding: 3px;
-    background: var(--surface);
-  }
-
-  .color-input-row input[type="text"] {
-    flex: 1;
-    height: 36px;
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 0 10px;
-    border: 0.5px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-    color: var(--ink);
-    text-transform: uppercase;
-    outline: none;
+    pointer-events: none;
     transition: border-color 0.15s;
   }
+  .comp.active .comp-outline { border-color: rgba(120,120,120,0.5); }
 
+  .comp-handle {
+    position: absolute;
+    width: 12px; height: 12px;
+    background: var(--surface);
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .comp.active .comp-handle { opacity: 1; }
+  .comp-handle.nw { top: -6px; left: -6px; cursor: nwse-resize; }
+  .comp-handle.ne { top: -6px; right: -6px; cursor: nesw-resize; }
+  .comp-handle.sw { bottom: -6px; left: -6px; cursor: nesw-resize; }
+  .comp-handle.se { bottom: -6px; right: -6px; cursor: nwse-resize; }
+
+  .screen-empty {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    color: var(--ink-faint); font-size: 11px; padding: 24px; line-height: 1.6; z-index: 1;
+  }
+  .screen-empty .display { font-family: var(--display); font-size: 15px; color: var(--ink); font-weight: 425; margin-bottom: 6px; }
+  .screen-empty svg { opacity: 0.3; margin-bottom: 12px; }
+
+  .stage-meta { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; min-height: 14px; }
+  .stage-meta .phase-dot { display: inline-block; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; margin-right: 6px; vertical-align: middle; animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* Transport controls near the phone */
+  .transport { display: flex; gap: 8px; width: 280px; }
+  .transport .button { flex: 1; }
+
+  .stage-actions { display: flex; gap: 8px; width: 280px; flex-wrap: wrap; }
+  .stage-actions .button { flex: 1; min-width: 0; }
+
+  /* bg image controls under stage */
+  .bg-controls { width: 280px; display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+  .bg-row { display: flex; gap: 8px; }
+  .bg-row .button { flex: 1; }
+
+  /* Controls (right panel) */
+  .control { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .control:last-child { margin-bottom: 0; }
+  .control label { font-size: 12px; color: var(--ink-soft); flex: 0 1 auto; min-width: 52px; font-weight: 375; }
+  .control input[type="range"] { flex: 1 1 0; min-width: 0; -webkit-appearance: none; appearance: none; height: 3px; background: var(--line); border-radius: 2px; outline: none; cursor: pointer; }
+  .control input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 14px; height: 14px; background: var(--ink); border-radius: 50%; cursor: grab; transition: transform 0.1s; }
+  .control input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .control input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; background: var(--ink); border-radius: 50%; border: none; cursor: grab; }
+
+  /* typed number input next to slider */
+  .num-input {
+    flex-shrink: 0; width: 52px; height: 26px;
+    font-family: var(--mono); font-size: 11px; font-weight: 425;
+    text-align: right; color: var(--ink);
+    padding: 0 8px;
+    background: var(--surface); border: 0.5px solid var(--line-strong);
+    border-radius: 4px; outline: none; transition: border-color 0.15s;
+    -moz-appearance: textfield;
+  }
+  .num-input::-webkit-outer-spin-button, .num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .num-input:focus { border-color: var(--ink); }
+  .num-suffix { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); flex-shrink: 0; margin-left: -4px; }
+
+  /* Color */
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 10px; }
+  .swatch { aspect-ratio: 1; border-radius: 50%; cursor: pointer; border: 0.5px solid var(--line); transition: transform 0.1s; position: relative; }
+  .swatch:hover { transform: scale(1.12); }
+  .swatch.active::after { content: ''; position: absolute; inset: -4px; border: 1px solid var(--ink); border-radius: 50%; }
+  .color-input-row { display: flex; align-items: center; gap: 8px; }
+  .color-input-row input[type="color"] { width: 36px; height: 36px; border: 0.5px solid var(--line); border-radius: var(--radius-sm); cursor: pointer; padding: 3px; background: var(--surface); }
+  .color-input-row input[type="text"] { flex: 1; min-width: 0; height: 36px; font-family: var(--mono); font-size: 11px; padding: 0 10px; border: 0.5px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); text-transform: uppercase; outline: none; transition: border-color 0.15s; }
   .color-input-row input[type="text"]:focus { border-color: var(--ink); }
 
-  .button {
-    padding: 10px 14px;
-    font-family: var(--body);
-    font-size: 12px;
-    font-weight: 375;
-    background: var(--surface);
-    color: var(--ink);
-    border: 0.5px solid var(--line-strong);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
+  .check-row { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-soft); cursor: pointer; user-select: none; margin-bottom: 10px; }
+  .check-row input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; border: 0.5px solid var(--line-strong); border-radius: 3px; background: var(--surface); cursor: pointer; position: relative; flex-shrink: 0; transition: all 0.15s; }
+  .check-row input[type="checkbox"]:checked { background: var(--ink); border-color: var(--ink); }
+  .check-row input[type="checkbox"]:checked::after { content: ''; position: absolute; left: 3px; top: 0.5px; width: 4px; height: 8px; border: solid var(--surface); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
 
-  .button:hover {
-    background: var(--ink);
-    color: var(--surface);
-    border-color: var(--ink);
-  }
-
-  .button.primary {
-    background: var(--ink);
-    color: var(--surface);
-    border-color: var(--ink);
-  }
-
+  .button { padding: 10px 14px; font-family: var(--body); font-size: 12px; font-weight: 375; background: var(--surface); color: var(--ink); border: 0.5px solid var(--line-strong); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .button:hover { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .button.primary { background: var(--ink); color: var(--surface); border-color: var(--ink); }
   .button.primary:hover { background: var(--accent); border-color: var(--accent); }
-
+  .button.small { padding: 7px 10px; font-size: 11px; }
   .button svg { width: 12px; height: 12px; }
-
   .button-row { display: flex; gap: 6px; }
   .button-row .button { flex: 1; }
 
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(26, 24, 21, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    backdrop-filter: blur(4px);
-    padding: 24px;
-  }
+  /* Modal */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 24, 21, 0.5); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); padding: 24px; }
+  .modal { background: var(--surface); border-radius: var(--radius-lg); padding: 28px; max-width: 640px; width: 100%; max-height: 80vh; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal-header { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 0.5px solid var(--line); }
+  .modal-title { font-family: var(--display); font-size: 22px; font-weight: 425; letter-spacing: -0.02em; }
+  .modal-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+  .modal-desc code { font-family: var(--mono); background: var(--bg-warm); padding: 2px 6px; border-radius: 3px; font-size: 11px; }
+  .code-block { flex: 1; min-height: 320px; font-family: var(--mono); font-size: 11px; line-height: 1.6; padding: 16px; border: 0.5px solid var(--line); border-radius: var(--radius-sm); background: var(--bg-warm); resize: none; color: var(--ink); outline: none; }
 
-  .modal {
-    background: var(--surface);
-    border-radius: var(--radius-lg);
-    padding: 28px;
-    max-width: 640px;
-    width: 100%;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-  }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 0.5px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 10px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
 
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding-bottom: 14px;
-    border-bottom: 0.5px solid var(--line);
-  }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--ink); color: var(--surface); padding: 12px 20px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 375; z-index: 200; transition: transform 0.3s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .toast.visible { transform: translateX(-50%) translateY(0); }
 
-  .modal-title {
-    font-family: var(--display);
-    font-size: 22px;
-    font-weight: 425;
-    letter-spacing: -0.02em;
+  /* ===== Fullscreen preview ===== */
+  .fullscreen-preview {
+    position: fixed; inset: 0; z-index: 500; display: none;
+    background: var(--screen-bg, #000);
+    transition: background 0.4s ease;
   }
+  .fullscreen-preview.active { display: block; }
+  .fullscreen-preview .fs-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+  .fullscreen-preview.has-bg .fs-bg { display: block; }
+  .fullscreen-preview canvas { position: absolute; }
+  .fs-exit { position: fixed; top: 20px; right: 20px; z-index: 510; background: rgba(255,255,255,0.92); border: none; border-radius: 999px; padding: 10px 18px; font-family: var(--body); font-size: 13px; font-weight: 425; color: var(--ink); cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 6px; }
+  .fs-exit svg { width: 13px; height: 13px; }
 
-  .modal-desc {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.6;
-  }
-
-  .modal-desc code {
-    font-family: var(--mono);
-    background: var(--bg-warm);
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 11px;
-  }
-
-  .code-block {
-    flex: 1;
-    min-height: 320px;
-    font-family: var(--mono);
-    font-size: 11px;
-    line-height: 1.6;
-    padding: 16px;
-    border: 0.5px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--bg-warm);
-    resize: none;
-    color: var(--ink);
-    outline: none;
-  }
-
-  .footer {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 0.5px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-faint);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 1100px) {
-    .workspace { grid-template-columns: 200px 1fr 260px; gap: 16px; }
-    .app { padding: 24px; }
-  }
-
-  @media (max-width: 880px) {
+  @media (max-width: 1100px) { .workspace { grid-template-columns: 210px 1fr 250px; gap: 16px; } .app { padding: 24px; } }
+  @media (max-width: 920px) {
     .workspace { grid-template-columns: 1fr; }
     .app { padding: 20px; }
     .brand-name { font-size: 22px; }
+    .stage-panel { order: -1; }
   }
-
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--ink);
-    color: var(--surface);
-    padding: 12px 20px;
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    font-weight: 375;
-    z-index: 200;
-    transition: transform 0.3s ease;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  }
-
-  .toast.visible { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
   <div class="app">
     <header class="header">
       <div class="brand">
-        <div class="brand-mark">
-          <span></span><span></span><span></span><span></span><span></span>
-        </div>
-        <h1 class="brand-name">Dot Morph Studio</h1>
-        <span class="brand-tag">v 1.2</span>
+        <div class="brand-mark"><span></span><span></span><span></span><span></span><span></span></div>
+        <h1 class="brand-name">Dotty</h1>
+        <span class="brand-tag">v 2.0</span>
       </div>
       <div class="header-meta">Particle avatars / generative</div>
     </header>
 
     <main class="workspace">
-      <!-- Left: Frames -->
+      <!-- LEFT: Frames + transition + sets -->
       <div class="panel">
         <div class="panel-title">Frames</div>
 
-        <div class="frame-row" id="slot-a">
-          <div class="frame-preview">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
-          </div>
-          <div class="frame-info">
-            <div class="frame-label">Start</div>
-            <div class="frame-status">Click or drop PNG</div>
-          </div>
-        </div>
+        <input type="text" id="set-name" class="set-name-input" value="Untitled set" maxlength="40" placeholder="Set name" />
 
-        <div class="frame-row" id="slot-b">
-          <div class="frame-preview">
-            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
-          </div>
-          <div class="frame-info">
-            <div class="frame-label">End</div>
-            <div class="frame-status">Optional</div>
-          </div>
-        </div>
-
-        <input type="file" id="file-a" accept="image/png" hidden />
-        <input type="file" id="file-b" accept="image/png" hidden />
-
-        <p style="font-size: 11px; color: var(--ink-faint); line-height: 1.6; margin-top: 4px;">
-          Transparent-background PNGs work best. Without an end frame, dots scatter and reform the start on loop.
-        </p>
-      </div>
-
-      <!-- Center: iPhone stage -->
-      <div class="panel stage-panel">
-        <div>
-          <div class="phone">
-            <div class="phone-volume"></div>
-            <div class="phone-power"></div>
-            <div class="phone-screen">
-              <div class="phone-island"></div>
-              <div class="phone-status">
-                <span>9:41</span>
-                <div class="phone-status-right">
-                  <svg viewBox="0 0 18 12" fill="currentColor"><path d="M1 8h2v3H1zm4-2h2v5H5zm4-2h2v7H9zm4-2h2v9h-2z"/></svg>
-                  <svg viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="2" width="20" height="8" rx="2"/><rect x="3" y="4" width="14" height="4" rx="0.5" fill="currentColor"/></svg>
-                </div>
-              </div>
-              <div class="phone-canvas-wrap" id="phone-canvas-wrap">
-                <div class="phone-empty" id="phone-empty">
-                  <svg width="32" height="32" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1">
-                    <circle cx="14" cy="14" r="2"/>
-                    <circle cx="24" cy="14" r="2"/>
-                    <circle cx="34" cy="14" r="2"/>
-                    <circle cx="14" cy="24" r="2"/>
-                    <circle cx="34" cy="24" r="2"/>
-                    <circle cx="14" cy="34" r="2"/>
-                    <circle cx="24" cy="34" r="2"/>
-                    <circle cx="34" cy="34" r="2"/>
-                  </svg>
-                  <span class="display">Begin with a shape</span>
-                  Upload a PNG silhouette to preview your avatar in context.
-                </div>
-                <canvas id="canvas" width="560" height="560" style="display:none"></canvas>
-              </div>
-              <div class="phone-home"></div>
-            </div>
-          </div>
-          <div class="phone-meta" id="phone-meta" style="visibility: hidden;">
-            <span class="phase-dot"></span><span id="phase-name">idle</span> · <span id="stage-stats">— dots</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Controls -->
-      <div class="panel">
-        <div class="panel-title">Controls</div>
-
-        <div class="section">
-          <div class="section-label">Transition</div>
+        <div class="section" style="padding-top: 0; border-bottom: none; padding-bottom: 0;">
+          <div class="section-label">What happens first</div>
           <div class="mode-toggle">
             <button class="mode-btn active" id="mode-direct">Direct morph</button>
             <button class="mode-btn" id="mode-disperse">Disperse</button>
@@ -911,27 +401,111 @@
           <p class="mode-hint" id="mode-hint">Holds start, morphs to end, holds, morphs back.</p>
         </div>
 
+        <div class="frames-list" id="frames-list"></div>
+
+        <button class="add-frame-btn" id="add-frame-btn">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5.5 1v9M1 5.5h9"/></svg>
+          <span class="add-frame-label">Add frame</span>
+        </button>
+
+        <input type="file" id="frame-file" accept="image/png" hidden />
+
+        <div class="sets-section">
+          <div class="sets-header">
+            <span class="sets-title">Saved sets</span>
+            <button class="sets-new" id="sets-new" title="New set">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 1v8M1 5h8"/></svg>New
+            </button>
+          </div>
+          <div class="sets-list" id="sets-list"></div>
+        </div>
+      </div>
+
+      <!-- CENTER: stage -->
+      <div class="panel stage-panel">
+        <div class="screen" id="screen">
+          <img class="screen-bg-img" id="screen-bg-img" alt="" />
+          <div class="screen-empty" id="screen-empty">
+            <svg width="32" height="32" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1">
+              <circle cx="14" cy="14" r="2"/><circle cx="24" cy="14" r="2"/><circle cx="34" cy="14" r="2"/>
+              <circle cx="14" cy="24" r="2"/><circle cx="34" cy="24" r="2"/>
+              <circle cx="14" cy="34" r="2"/><circle cx="24" cy="34" r="2"/><circle cx="34" cy="34" r="2"/>
+            </svg>
+            <span class="display">Begin with a shape</span>
+            Upload a PNG silhouette to preview your avatar.
+          </div>
+          <div class="comp" id="comp">
+            <canvas id="canvas" width="560" height="560"></canvas>
+            <div class="comp-outline"></div>
+            <div class="comp-handle nw" data-h="nw"></div>
+            <div class="comp-handle ne" data-h="ne"></div>
+            <div class="comp-handle sw" data-h="sw"></div>
+            <div class="comp-handle se" data-h="se"></div>
+          </div>
+        </div>
+
+        <div class="stage-meta" id="stage-meta" style="visibility:hidden;">
+          <span class="phase-dot"></span><span id="phase-name">idle</span> · <span id="stage-stats">— dots</span>
+        </div>
+
+        <div class="transport">
+          <button class="button" id="play-btn">
+            <svg viewBox="0 0 12 12" fill="currentColor" id="play-icon"><rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/></svg>
+            <span id="play-label">Pause</span>
+          </button>
+          <button class="button" id="restart-btn">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 6a4 4 0 1 1 1.5 3.1"/><path d="M2 2v3h3"/></svg>Restart
+          </button>
+        </div>
+
+        <div class="stage-actions">
+          <button class="button primary" id="export-frame">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 1v7m0 0l-2.5-2.5M6 8l2.5-2.5M2 10h8"/></svg>
+            <span id="export-btn-label">Export PNG</span>
+          </button>
+          <button class="button" id="expand-btn">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1 4V1h3M11 4V1H8M1 8v3h3M11 8v3H8"/></svg>Expand
+          </button>
+        </div>
+
+        <div class="bg-controls">
+          <div class="bg-row">
+            <button class="button small" id="bg-upload-btn">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="1.5" y="2.5" width="9" height="7" rx="1"/><circle cx="4" cy="5" r="1"/><path d="M2 9l3-2.5 2.5 2 2.5-2"/></svg>
+              Background image
+            </button>
+            <button class="button small" id="bg-clear-btn" style="display:none; flex: 0 0 auto;">Clear</button>
+          </div>
+          <input type="file" id="bg-file" accept="image/*" hidden />
+          <button class="button small" id="comp-reset-btn" style="display:none;">Re-center composition</button>
+        </div>
+      </div>
+
+      <!-- RIGHT: motion + color + export options -->
+      <div class="panel">
+        <div class="panel-title">Settings</div>
+
         <div class="section">
           <div class="section-label">Motion</div>
           <div class="control">
             <label>Speed</label>
             <input type="range" id="speed" min="1" max="10" step="1" value="5" />
-            <span class="readout" id="speed-out">5</span>
+            <input type="number" class="num-input" id="speed-num" min="1" max="10" step="1" value="5" />
           </div>
           <div class="control">
-            <label>Dot count</label>
+            <label>Dots</label>
             <input type="range" id="count" min="100" max="2000" step="50" value="700" />
-            <span class="readout" id="count-out">700</span>
+            <input type="number" class="num-input" id="count-num" min="100" max="2000" step="50" value="700" />
           </div>
           <div class="control">
             <label>Dot size</label>
             <input type="range" id="size" min="1" max="8" step="0.5" value="3" />
-            <span class="readout" id="size-out">3</span>
+            <input type="number" class="num-input" id="size-num" min="1" max="8" step="0.5" value="3" />
           </div>
           <div class="control">
             <label>Scale</label>
-            <input type="range" id="scale" min="30" max="100" step="1" value="65" />
-            <span class="readout" id="scale-out">65%</span>
+            <input type="range" id="scale" min="20" max="100" step="1" value="60" />
+            <input type="text" class="num-input" id="scale-num" value="60%" />
           </div>
         </div>
 
@@ -945,49 +519,25 @@
         </div>
 
         <div class="section">
-          <div class="button-row">
-            <button class="button" id="play-btn">
-              <svg viewBox="0 0 12 12" fill="currentColor" id="play-icon"><rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/></svg>
-              <span id="play-label">Pause</span>
-            </button>
-            <button class="button" id="restart-btn">
-              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 6a4 4 0 1 1 1.5 3.1"/><path d="M2 2v3h3"/></svg>
-              Restart
-            </button>
-          </div>
-        </div>
-
-        <div class="section">
           <div class="section-label">Export</div>
           <div class="mode-toggle" style="margin-bottom: 10px;">
-            <button class="mode-btn active" id="fmt-png" data-fmt="png">PNG</button>
-            <button class="mode-btn" id="fmt-svg" data-fmt="svg">SVG</button>
+            <button class="mode-btn active" id="fmt-png">PNG</button>
+            <button class="mode-btn" id="fmt-svg">SVG</button>
           </div>
-          <div class="export-opt">
-            <label class="check-row">
-              <input type="checkbox" id="export-transparent" checked />
-              <span>Transparent background</span>
-            </label>
-          </div>
-          <div class="control export-bg-row" id="export-bg-row" style="display:none;">
+          <label class="check-row">
+            <input type="checkbox" id="export-transparent" checked />
+            <span>Transparent background</span>
+          </label>
+          <div class="control" id="export-bg-row" style="display:none;">
             <label>BG color</label>
-            <input type="color" id="export-bg-color" value="#F4F1EA" style="width: 32px; height: 28px; border: 0.5px solid var(--line); border-radius: 4px; padding: 2px; background: var(--surface); cursor: pointer;" />
-            <span class="readout" id="export-bg-readout" style="font-size: 10px;">#F4F1EA</span>
+            <input type="color" id="export-bg-color" value="#F4F1EA" style="width:32px;height:28px;border:0.5px solid var(--line);border-radius:4px;padding:2px;background:var(--surface);cursor:pointer;" />
+            <span class="num-suffix" id="export-bg-readout">#F4F1EA</span>
           </div>
-          <div class="control" id="export-res-row">
-            <label>Resolution</label>
-            <input type="range" id="export-res" min="1" max="4" step="1" value="2" />
-            <span class="readout" id="export-res-out">2×</span>
-          </div>
-          <button class="button primary" id="export-frame" style="width: 100%;">
-            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 1v7m0 0l-2.5-2.5M6 8l2.5-2.5M2 10h8"/></svg>
-            <span id="export-btn-label">Export PNG</span>
-          </button>
+          <p style="font-size:11px;color:var(--ink-faint);line-height:1.5;margin-top:4px;">Exports the current frame at high resolution. Pause to capture a specific pose.</p>
         </div>
 
-        <button class="button" id="export-code" style="width: 100%;">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 4L1.5 6L4 8M8 4l2.5 2L8 8M7 2.5L5 9.5"/></svg>
-          Get code
+        <button class="button" id="export-code" style="width:100%;">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 4L1.5 6L4 8M8 4l2.5 2L8 8M7 2.5L5 9.5"/></svg>Get code
         </button>
       </div>
     </main>
@@ -998,306 +548,305 @@
     </footer>
   </div>
 
+  <!-- Fullscreen preview -->
+  <div class="fullscreen-preview" id="fullscreen">
+    <img class="fs-bg" id="fs-bg" alt="" />
+    <canvas id="fs-canvas"></canvas>
+  </div>
+  <button class="fs-exit" id="fs-exit" style="display:none;">
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3l6 6M9 3l-6 6"/></svg>Exit preview
+  </button>
+
   <div id="toast" class="toast"></div>
 
 <script>
 (function(){
   const STAGE_SIZE = 560;
+  const MAX_FRAMES = 6;
   const SWATCH_COLORS = ['#C8533D','#1A1815','#534AB7','#1D9E75','#D4537E','#378ADD','#BA7517','#888780','#E24B4A','#97C459','#7F77DD','#FFFFFF'];
 
-  const phoneCanvasWrap = document.getElementById('phone-canvas-wrap');
-  const phoneEmpty = document.getElementById('phone-empty');
-  const phoneMeta = document.getElementById('phone-meta');
+  // DOM
+  const screen = document.getElementById('screen');
+  const screenBgImg = document.getElementById('screen-bg-img');
+  const screenEmpty = document.getElementById('screen-empty');
+  const comp = document.getElementById('comp');
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  const slotA = document.getElementById('slot-a');
-  const slotB = document.getElementById('slot-b');
-  const fileA = document.getElementById('file-a');
-  const fileB = document.getElementById('file-b');
-  const speedInput = document.getElementById('speed');
-  const speedOut = document.getElementById('speed-out');
-  const countInput = document.getElementById('count');
-  const countOut = document.getElementById('count-out');
-  const sizeInput = document.getElementById('size');
-  const sizeOut = document.getElementById('size-out');
-  const scaleInput = document.getElementById('scale');
-  const scaleOut = document.getElementById('scale-out');
-  const swatchesEl = document.getElementById('swatches');
-  const colorPicker = document.getElementById('color-picker');
-  const colorHex = document.getElementById('color-hex');
+  const stageMeta = document.getElementById('stage-meta');
+  const phaseName = document.getElementById('phase-name');
+  const stageStats = document.getElementById('stage-stats');
+  const framesListEl = document.getElementById('frames-list');
+  const addFrameBtn = document.getElementById('add-frame-btn');
+  const frameFile = document.getElementById('frame-file');
+  const setNameInput = document.getElementById('set-name');
+  const setsListEl = document.getElementById('sets-list');
+  const setsNewBtn = document.getElementById('sets-new');
+  const modeDirectBtn = document.getElementById('mode-direct');
+  const modeDisperseBtn = document.getElementById('mode-disperse');
+  const modeHint = document.getElementById('mode-hint');
   const playBtn = document.getElementById('play-btn');
   const playLabel = document.getElementById('play-label');
   const playIcon = document.getElementById('play-icon');
   const restartBtn = document.getElementById('restart-btn');
   const exportFrameBtn = document.getElementById('export-frame');
+  const exportBtnLabel = document.getElementById('export-btn-label');
   const exportCodeBtn = document.getElementById('export-code');
+  const expandBtn = document.getElementById('expand-btn');
+  const speedInput = document.getElementById('speed');
+  const speedNum = document.getElementById('speed-num');
+  const countInput = document.getElementById('count');
+  const countNum = document.getElementById('count-num');
+  const sizeInput = document.getElementById('size');
+  const sizeNum = document.getElementById('size-num');
+  const scaleInput = document.getElementById('scale');
+  const scaleNum = document.getElementById('scale-num');
+  const swatchesEl = document.getElementById('swatches');
+  const colorPicker = document.getElementById('color-picker');
+  const colorHex = document.getElementById('color-hex');
   const fmtPngBtn = document.getElementById('fmt-png');
   const fmtSvgBtn = document.getElementById('fmt-svg');
   const exportTransparent = document.getElementById('export-transparent');
   const exportBgRow = document.getElementById('export-bg-row');
   const exportBgColor = document.getElementById('export-bg-color');
   const exportBgReadout = document.getElementById('export-bg-readout');
-  const exportResRow = document.getElementById('export-res-row');
-  const exportRes = document.getElementById('export-res');
-  const exportResOut = document.getElementById('export-res-out');
-  const exportBtnLabel = document.getElementById('export-btn-label');
-  const modeDirectBtn = document.getElementById('mode-direct');
-  const modeDisperseBtn = document.getElementById('mode-disperse');
-  const modeHint = document.getElementById('mode-hint');
-  const phaseName = document.getElementById('phase-name');
-  const stageStats = document.getElementById('stage-stats');
+  const bgUploadBtn = document.getElementById('bg-upload-btn');
+  const bgClearBtn = document.getElementById('bg-clear-btn');
+  const bgFile = document.getElementById('bg-file');
+  const compResetBtn = document.getElementById('comp-reset-btn');
+  const fullscreen = document.getElementById('fullscreen');
+  const fsBg = document.getElementById('fs-bg');
+  const fsCanvas = document.getElementById('fs-canvas');
+  const fsCtx = fsCanvas.getContext('2d');
+  const fsExit = document.getElementById('fs-exit');
   const toast = document.getElementById('toast');
 
+  // ---------- State ----------
+  // frames: array of { dataUrl, img, targets:[{x,y}] } ; in disperse mode only frames[0] is used
   const state = {
-    imgA: null, imgB: null,
-    dataUrlA: null, dataUrlB: null,
-    targetsA: [], targetsB: [],
-    dotCount: 700,
-    speed: 5,
-    dotSize: 3,
-    scale: 65,
-    color: '#C8533D',
-    mode: 'direct',
-    playing: true,
-    dots: [],
-    phase: 'at-a',
-    phaseT: 0,
-    rafId: null,
-    lastTime: 0,
+    frames: [],
+    dotCount: 700, speed: 5, dotSize: 3, scale: 60,
+    color: '#C8533D', mode: 'direct',
+    playing: true, dots: [], phase: 'hold', phaseT: 0,
+    seqFrom: 0, seqTo: 1,         // which frame indices we're morphing between (direct mode)
+    rafId: null, lastTime: 0,
+    bgDataUrl: null,
+    compX: 0.5, compY: 0.5, compScale: 0.6,
+    fsActive: false,
+    addPending: false,            // whether the file picker is adding a new frame vs replacing
+    replaceIndex: -1,
   };
 
-  // Compute the canvas display size based on the phone screen width and scale
-  function applyCanvasScale() {
-    const wrap = phoneCanvasWrap;
-    const w = wrap.clientWidth;
-    const h = wrap.clientHeight;
-    const base = Math.min(w, h);
-    const size = Math.round(base * (state.scale / 100));
-    canvas.style.width = size + 'px';
-    canvas.style.height = size + 'px';
+  // ---------- Sets manager ----------
+  const STORAGE_KEY = 'dotMorphSets_v3';
+  const setsManager = {
+    sets: [], activeId: null,
+    load() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) { const p = JSON.parse(raw); this.sets = p.sets || []; this.activeId = p.activeId || null; }
+      } catch(e) {}
+      // migrate any older v2 sets present in this key shape
+      this.sets.forEach(s => {
+        if (!s.frames) {
+          s.frames = [];
+          if (s.dataUrlA) s.frames.push(s.dataUrlA);
+          if (s.dataUrlB) s.frames.push(s.dataUrlB);
+          delete s.dataUrlA; delete s.dataUrlB;
+        }
+      });
+      if (!this.sets.length) {
+        const f = { id: this._id(), name: 'Untitled set', frames: [], mode: 'direct' };
+        this.sets.push(f); this.activeId = f.id; this.persist();
+      } else if (!this.activeId || !this.sets.find(s => s.id === this.activeId)) {
+        this.activeId = this.sets[0].id;
+      }
+    },
+    persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ sets: this.sets, activeId: this.activeId })); } catch(e) {} },
+    activeSet() { return this.sets.find(s => s.id === this.activeId); },
+    updateActive(patch) { const s = this.activeSet(); if (s) { Object.assign(s, patch); this.persist(); } },
+    saveFrames() { const s = this.activeSet(); if (s) { s.frames = state.frames.map(f => f.dataUrl); this.persist(); } },
+    createNew() { const s = { id: this._id(), name: 'Untitled set ' + (this.sets.length + 1), frames: [], mode: state.mode }; this.sets.push(s); this.activeId = s.id; this.persist(); return s; },
+    selectSet(id) { if (this.sets.find(s => s.id === id)) { this.activeId = id; this.persist(); } },
+    canDelete(id) { if (this.sets.length <= 1) return false; return this.sets.findIndex(s => s.id === id) > 0; },
+    deleteSet(id) {
+      if (!this.canDelete(id)) return false;
+      const i = this.sets.findIndex(s => s.id === id); if (i === -1) return false;
+      this.sets.splice(i, 1);
+      if (this.activeId === id) this.activeId = this.sets[Math.max(0, i - 1)].id;
+      this.persist(); return true;
+    },
+    _id() { return 's' + Date.now().toString(36) + Math.random().toString(36).slice(2,5); },
+  };
+  setsManager.load();
+
+  // ---------- Light color -> dark screen ----------
+  function luminance(hex) {
+    const c = hex.replace('#',''); const r=parseInt(c.substr(0,2),16)/255,g=parseInt(c.substr(2,2),16)/255,b=parseInt(c.substr(4,2),16)/255;
+    const f=v=>v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);
+    return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b);
+  }
+  function updateScreenBg() {
+    if (state.bgDataUrl) return;
+    const dark = luminance(state.color) > 0.6;
+    screen.style.setProperty('--screen-bg', dark ? '#1A1815' : '#F4F1EA');
+    fullscreen.style.setProperty('--screen-bg', dark ? '#1A1815' : '#F4F1EA');
   }
 
+  // ---------- Color ----------
   SWATCH_COLORS.forEach(c => {
     const sw = document.createElement('div');
-    sw.className = 'swatch';
-    sw.style.background = c;
-    if (c === '#FFFFFF') sw.style.border = '0.5px solid var(--line-strong)';
-    sw.dataset.color = c;
-    sw.addEventListener('click', () => setColor(c));
+    sw.className='swatch'; sw.style.background=c;
+    if (c==='#FFFFFF') sw.style.border='0.5px solid var(--line-strong)';
+    sw.dataset.color=c; sw.addEventListener('click',()=>setColor(c));
     swatchesEl.appendChild(sw);
   });
-  updateSwatchActive();
+  function updateSwatchActive(){ swatchesEl.querySelectorAll('.swatch').forEach(el=>el.classList.toggle('active',el.dataset.color.toLowerCase()===state.color.toLowerCase())); }
+  function setColor(c){ state.color=c; colorPicker.value=c; colorHex.value=c.toUpperCase(); updateSwatchActive(); updateScreenBg(); }
+  colorPicker.addEventListener('input',e=>setColor(e.target.value));
+  colorHex.addEventListener('change',e=>{ let v=e.target.value.trim(); if(!v.startsWith('#'))v='#'+v; if(/^#[0-9A-Fa-f]{6}$/.test(v))setColor(v); else colorHex.value=state.color.toUpperCase(); });
+  updateSwatchActive(); updateScreenBg();
 
-  function updateSwatchActive() {
-    swatchesEl.querySelectorAll('.swatch').forEach(el => {
-      el.classList.toggle('active', el.dataset.color.toLowerCase() === state.color.toLowerCase());
-    });
+  // ---------- Slider + number binding ----------
+  function bindControl(slider, num, key, opts={}) {
+    const sfx = opts.suffix || '';
+    const write = val => { num.value = sfx ? (val+sfx) : val; };
+    const apply = (val, fromNum) => {
+      val = Math.max(opts.min, Math.min(opts.max, val));
+      if (opts.step>=1) val = Math.round(val/opts.step)*opts.step;
+      state[key]=val; slider.value=val;
+      if(!fromNum) write(val);
+      if(opts.onChange) opts.onChange(val);
+    };
+    slider.addEventListener('input',e=>apply(parseFloat(e.target.value),false));
+    num.addEventListener('input',e=>{const v=parseFloat(e.target.value); if(!isNaN(v))apply(v,true);});
+    num.addEventListener('focus',e=>{ if(sfx)e.target.value=state[key]; });
+    num.addEventListener('blur',e=>{ let v=parseFloat(e.target.value); if(isNaN(v))v=state[key]; apply(v,false); write(state[key]); });
+    num.addEventListener('keydown',e=>{ if(e.key==='Enter')e.target.blur(); });
   }
+  bindControl(speedInput, speedNum, 'speed', {min:1,max:10,step:1});
+  bindControl(countInput, countNum, 'dotCount', {min:100,max:2000,step:50, onChange: rebuildTargets});
+  bindControl(sizeInput, sizeNum, 'dotSize', {min:1,max:8,step:0.5});
+  bindControl(scaleInput, scaleNum, 'scale', {min:20,max:100,step:1, suffix:'%', onChange:v=>{state.compScale=v/100; layoutComp();}});
 
-  function setColor(c) {
-    state.color = c;
-    colorPicker.value = c;
-    colorHex.value = c.toUpperCase();
-    updateSwatchActive();
-  }
+  // ---------- Mode ----------
+  function activeFrameCount() { return state.mode==='direct' ? state.frames.length : Math.min(1, state.frames.length); }
+  function morphable() { return state.mode==='direct' && state.frames.length >= 2; }
 
-  colorPicker.addEventListener('input', e => setColor(e.target.value));
-  colorHex.addEventListener('change', e => {
-    let v = e.target.value.trim();
-    if (!v.startsWith('#')) v = '#' + v;
-    if (/^#[0-9A-Fa-f]{6}$/.test(v)) setColor(v);
-    else colorHex.value = state.color.toUpperCase();
-  });
-
-  speedInput.addEventListener('input', e => {
-    state.speed = parseInt(e.target.value);
-    speedOut.textContent = state.speed;
-  });
-
-  countInput.addEventListener('input', e => {
-    state.dotCount = parseInt(e.target.value);
-    countOut.textContent = state.dotCount;
-    rebuildTargets();
-  });
-
-  sizeInput.addEventListener('input', e => {
-    state.dotSize = parseFloat(e.target.value);
-    sizeOut.textContent = state.dotSize;
-  });
-
-  scaleInput.addEventListener('input', e => {
-    state.scale = parseInt(e.target.value);
-    scaleOut.textContent = state.scale + '%';
-    applyCanvasScale();
-  });
-
-  modeDirectBtn.addEventListener('click', () => setMode('direct'));
-  modeDisperseBtn.addEventListener('click', () => setMode('disperse'));
-
-  function setMode(m) {
+  function applyModeUI(m) {
     state.mode = m;
-    modeDirectBtn.classList.toggle('active', m === 'direct');
-    modeDisperseBtn.classList.toggle('active', m === 'disperse');
-    modeHint.textContent = m === 'direct'
-      ? 'Holds start, morphs to end, holds, morphs back.'
-      : 'Start scatters into a cloud, then assembles into end.';
-    if (state.targetsA.length) restartAnimation();
+    modeDirectBtn.classList.toggle('active', m==='direct');
+    modeDisperseBtn.classList.toggle('active', m==='disperse');
+    modeHint.textContent = m==='direct'
+      ? 'Morphs through your frames in order, looping back to the first. Add 2+ frames.'
+      : 'Uses the first frame only. Forms the shape, scatters into a cloud, re-forms.';
+    renderFramesList();
+  }
+  function setMode(m) {
+    applyModeUI(m);
+    setsManager.updateActive({ mode: m });
+    if (state.frames.length) restartAnimation();
+  }
+  modeDirectBtn.addEventListener('click',()=>setMode('direct'));
+  modeDisperseBtn.addEventListener('click',()=>setMode('disperse'));
+
+  // ---------- Frames list UI ----------
+  function frameRowHTML(frame, idx, label) {
+    const filled = !!frame;
+    if (!filled) {
+      return `<div class="frame-row" data-idx="${idx}" data-empty="1">
+        <div class="frame-preview"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg></div>
+        <div class="frame-info"><div class="frame-label">${label}</div><div class="frame-status">Click or drop PNG</div></div>
+      </div>`;
+    }
+    return `<div class="frame-row filled" data-idx="${idx}">
+      <div class="frame-preview"><img src="${frame.dataUrl}" alt="${label}"/></div>
+      <div class="frame-info"><div class="frame-label">${label}</div><div class="frame-status">Frame loaded</div></div>
+      <div class="frame-clear" data-idx="${idx}"><svg viewBox="0 0 9 9" fill="none"><path d="M1 1l7 7M8 1l-7 7" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+    </div>`;
   }
 
-  slotA.addEventListener('click', e => { if (!e.target.closest('.frame-clear')) fileA.click(); });
-  slotB.addEventListener('click', e => { if (!e.target.closest('.frame-clear')) fileB.click(); });
-  fileA.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0], 'a'); e.target.value = ''; });
-  fileB.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0], 'b'); e.target.value = ''; });
+  function frameLabel(idx) {
+    if (state.mode === 'disperse') return 'Frame';
+    if (idx === 0) return 'Frame 1 · start';
+    if (idx === 1) return 'Frame 2 · required';
+    return 'Frame ' + (idx+1);
+  }
 
-  [['a', slotA], ['b', slotB]].forEach(([which, el]) => {
-    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('dragover'); });
-    el.addEventListener('dragleave', () => el.classList.remove('dragover'));
-    el.addEventListener('drop', e => {
-      e.preventDefault();
-      el.classList.remove('dragover');
-      const file = Array.from(e.dataTransfer.files).find(f => f.type === 'image/png');
-      if (file) loadFile(file, which);
-      else showToast('PNG files only');
-    });
-  });
-
-  playBtn.addEventListener('click', () => {
-    state.playing = !state.playing;
-    playLabel.textContent = state.playing ? 'Pause' : 'Play';
-    if (state.playing) {
-      state.lastTime = performance.now();
-      playIcon.innerHTML = '<rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/>';
-    } else {
-      playIcon.innerHTML = '<path d="M3 2l7 4-7 4z"/>';
-    }
-  });
-
-  restartBtn.addEventListener('click', restartAnimation);
-
-  function restartAnimation() {
-    if (!state.targetsA.length) return;
-    initDots();
+  function renderFramesList() {
+    let rowsToShow;
     if (state.mode === 'direct') {
-      // Direct mode starts WITH the start shape already formed
-      placeDotsAt('a');
-      state.phase = 'at-a';
+      // Direct morph requires a minimum of two frames — always show at least 2 rows
+      rowsToShow = Math.max(2, state.frames.length);
     } else {
-      state.phase = state.imgB ? 'forming-a' : 'forming';
+      // Disperse uses a single frame
+      rowsToShow = 1;
     }
-    state.phaseT = 0;
-    if (!state.playing) {
-      state.playing = true;
-      playLabel.textContent = 'Pause';
-      playIcon.innerHTML = '<rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/>';
+    let html = '';
+    for (let i=0;i<rowsToShow;i++){
+      html += frameRowHTML(state.frames[i] || null, i, frameLabel(i));
+    }
+    framesListEl.innerHTML = html;
+
+    // wire rows
+    framesListEl.querySelectorAll('.frame-row').forEach(row => {
+      const idx = parseInt(row.dataset.idx);
+      row.addEventListener('click', e => {
+        if (e.target.closest('.frame-clear')) return;
+        // replace or fill this slot
+        state.addPending = false; state.replaceIndex = idx;
+        frameFile.click();
+      });
+      const clr = row.querySelector('.frame-clear');
+      if (clr) clr.addEventListener('click', e => { e.stopPropagation(); removeFrame(idx); });
+      // drag/drop per row
+      row.addEventListener('dragover', e => { e.preventDefault(); row.classList.add('dragover'); });
+      row.addEventListener('dragleave', () => row.classList.remove('dragover'));
+      row.addEventListener('drop', e => {
+        e.preventDefault(); row.classList.remove('dragover');
+        const f = Array.from(e.dataTransfer.files).find(x => x.type==='image/png');
+        if (f) { state.addPending=false; state.replaceIndex=idx; loadFrameFile(f); }
+        else showToast('PNG files only');
+      });
+    });
+
+    // add-frame button: direct mode only, capped at MAX_FRAMES
+    if (state.mode !== 'direct') {
+      addFrameBtn.style.display = 'none';
+    } else {
+      addFrameBtn.style.display = 'flex';
+      const atMax = state.frames.length >= MAX_FRAMES;
+      addFrameBtn.disabled = atMax;
+      addFrameBtn.querySelector('.add-frame-label').textContent = atMax ? `Max ${MAX_FRAMES} frames` : 'Add frame';
     }
   }
 
-  // --- Export controls ---
-  const exportState = { format: 'png', transparent: true, bgColor: '#F4F1EA', res: 2 };
-
-  function setExportFormat(f) {
-    exportState.format = f;
-    fmtPngBtn.classList.toggle('active', f === 'png');
-    fmtSvgBtn.classList.toggle('active', f === 'svg');
-    exportBtnLabel.textContent = f === 'png' ? 'Export PNG' : 'Export SVG';
-    exportResRow.style.display = f === 'png' ? 'flex' : 'none';
-  }
-
-  fmtPngBtn.addEventListener('click', () => setExportFormat('png'));
-  fmtSvgBtn.addEventListener('click', () => setExportFormat('svg'));
-
-  exportTransparent.addEventListener('change', e => {
-    exportState.transparent = e.target.checked;
-    exportBgRow.style.display = e.target.checked ? 'none' : 'flex';
+  addFrameBtn.addEventListener('click', () => {
+    if (state.frames.length >= MAX_FRAMES) return;
+    state.addPending = true; state.replaceIndex = -1;
+    frameFile.click();
   });
 
-  exportBgColor.addEventListener('input', e => {
-    exportState.bgColor = e.target.value;
-    exportBgReadout.textContent = e.target.value.toUpperCase();
+  frameFile.addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) loadFrameFile(f);
+    e.target.value = '';
   });
 
-  exportRes.addEventListener('input', e => {
-    exportState.res = parseInt(e.target.value);
-    exportResOut.textContent = exportState.res + '×';
-  });
-
-  exportFrameBtn.addEventListener('click', () => {
-    if (!state.targetsA.length) return showToast('Add a PNG first');
-    if (exportState.format === 'png') doExportPNG();
-    else doExportSVG();
-  });
-
-  function doExportPNG() {
-    const res = exportState.res;
-    const ex = document.createElement('canvas');
-    ex.width = STAGE_SIZE * res;
-    ex.height = STAGE_SIZE * res;
-    const ec = ex.getContext('2d');
-    ec.scale(res, res);
-    if (!exportState.transparent) {
-      ec.fillStyle = exportState.bgColor;
-      ec.fillRect(0, 0, STAGE_SIZE, STAGE_SIZE);
-    }
-    ec.fillStyle = state.color;
-    for (const d of state.dots) {
-      ec.beginPath();
-      ec.arc(d.x, d.y, state.dotSize, 0, Math.PI * 2);
-      ec.fill();
-    }
-    const link = document.createElement('a');
-    link.download = 'dot-avatar-' + Date.now() + '.png';
-    link.href = ex.toDataURL('image/png');
-    link.click();
-    showToast(`PNG exported (${ex.width}×${ex.height})`);
-  }
-
-  function doExportSVG() {
-    const w = STAGE_SIZE;
-    const h = STAGE_SIZE;
-    const parts = [];
-    parts.push(`<?xml version="1.0" encoding="UTF-8"?>`);
-    parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">`);
-    if (!exportState.transparent) {
-      parts.push(`  <rect width="${w}" height="${h}" fill="${exportState.bgColor}"/>`);
-    }
-    parts.push(`  <g fill="${state.color}">`);
-    const r = state.dotSize;
-    for (const d of state.dots) {
-      const cx = Math.round(d.x * 100) / 100;
-      const cy = Math.round(d.y * 100) / 100;
-      parts.push(`    <circle cx="${cx}" cy="${cy}" r="${r}"/>`);
-    }
-    parts.push(`  </g>`);
-    parts.push(`</svg>`);
-    const svg = parts.join('\n');
-    const blob = new Blob([svg], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = 'dot-avatar-' + Date.now() + '.svg';
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-    showToast(`SVG exported (${state.dots.length} dots)`);
-  }
-
-  exportCodeBtn.addEventListener('click', showCodeModal);
-
-  function loadFile(file, which) {
+  function loadFrameFile(file) {
     const reader = new FileReader();
     reader.onload = ev => {
       const img = new Image();
       img.onload = () => {
-        if (which === 'a') {
-          state.imgA = img;
-          state.dataUrlA = ev.target.result;
-          state.targetsA = extractTargets(img, state.dotCount);
-          renderSlotFilled(slotA, 'Start', ev.target.result, 'a', file.name);
+        const frame = { dataUrl: ev.target.result, img, targets: extractTargets(img, state.dotCount) };
+        if (state.addPending || state.replaceIndex === -1) {
+          if (state.frames.length >= MAX_FRAMES) { showToast('Max '+MAX_FRAMES+' frames'); return; }
+          state.frames.push(frame);
         } else {
-          state.imgB = img;
-          state.dataUrlB = ev.target.result;
-          state.targetsB = extractTargets(img, state.dotCount);
-          renderSlotFilled(slotB, 'End', ev.target.result, 'b', file.name);
+          state.frames[state.replaceIndex] = frame;
         }
+        state.addPending = false; state.replaceIndex = -1;
+        setsManager.saveFrames();
+        renderFramesList(); renderSetsList();
         startIfReady();
       };
       img.onerror = () => showToast('Could not load image');
@@ -1306,671 +855,378 @@
     reader.readAsDataURL(file);
   }
 
-  function renderSlotFilled(el, label, dataUrl, which, filename) {
-    el.classList.add('filled');
-    const short = filename.length > 18 ? filename.slice(0, 15) + '...' : filename;
-    el.innerHTML = `
-      <div class="frame-preview"><img src="${dataUrl}" alt="${label}"/></div>
-      <div class="frame-info">
-        <div class="frame-label">${label}</div>
-        <div class="frame-status" title="${filename}">${short}</div>
-      </div>
-      <div class="frame-clear" data-which="${which}">
-        <svg viewBox="0 0 9 9" fill="none"><path d="M1 1l7 7M8 1l-7 7" stroke-width="1.3" stroke-linecap="round"/></svg>
-      </div>
-    `;
-    el.querySelector('.frame-clear').addEventListener('click', e => {
+  function removeFrame(idx) {
+    state.frames.splice(idx, 1);
+    setsManager.saveFrames();
+    renderFramesList(); renderSetsList();
+    if (!state.frames.length) {
+      comp.style.display='none'; screenEmpty.style.display='flex'; stageMeta.style.visibility='hidden'; state.dots=[];
+    } else {
+      rebuildTargets();
+    }
+  }
+
+  // ---------- Composition layout ----------
+  function layoutComp() {
+    const sw = screen.clientWidth, sh = screen.clientHeight;
+    const size = sw * state.compScale;
+    comp.style.width = size+'px'; comp.style.height = size+'px';
+    comp.style.left = (state.compX*sw - size/2)+'px';
+    comp.style.top = (state.compY*sh - size/2)+'px';
+  }
+  let dragging=false, dragStart=null;
+  comp.addEventListener('pointerdown', e => {
+    if (e.target.classList.contains('comp-handle')) return;
+    dragging=true; comp.classList.add('dragging'); comp.setPointerCapture(e.pointerId);
+    dragStart={x:e.clientX,y:e.clientY,cx:state.compX,cy:state.compY};
+  });
+  comp.addEventListener('pointermove', e => {
+    if(!dragging)return;
+    const sw=screen.clientWidth,sh=screen.clientHeight;
+    state.compX=Math.max(0,Math.min(1,dragStart.cx+(e.clientX-dragStart.x)/sw));
+    state.compY=Math.max(0,Math.min(1,dragStart.cy+(e.clientY-dragStart.y)/sh));
+    layoutComp();
+  });
+  comp.addEventListener('pointerup',()=>{ dragging=false; comp.classList.remove('dragging'); });
+  comp.addEventListener('pointerdown',()=>comp.classList.add('active'));
+  document.addEventListener('pointerdown', e => { if(!comp.contains(e.target)) comp.classList.remove('active'); });
+
+  comp.querySelectorAll('.comp-handle').forEach(handle => {
+    handle.addEventListener('pointerdown', e => {
       e.stopPropagation();
-      clearSlot(which);
+      const sw=screen.clientWidth, start={x:e.clientX,scale:state.compScale};
+      handle.setPointerCapture(e.pointerId);
+      const dir=handle.dataset.h, sign=(dir==='se'||dir==='ne')?1:-1;
+      const move=ev=>{ const delta=(ev.clientX-start.x)*sign; let ns=start.scale+(delta/sw)*2; ns=Math.max(0.2,Math.min(1.4,ns)); state.compScale=ns; state.scale=Math.round(ns*100); scaleInput.value=Math.min(100,state.scale); scaleNum.value=state.scale+'%'; layoutComp(); };
+      const up=()=>{ handle.releasePointerCapture(e.pointerId); document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up); };
+      document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
+    });
+  });
+  compResetBtn.addEventListener('click',()=>{ state.compX=0.5; state.compY=0.5; state.compScale=state.scale/100; layoutComp(); showToast('Composition re-centered'); });
+
+  // ---------- Background image ----------
+  bgUploadBtn.addEventListener('click',()=>bgFile.click());
+  bgFile.addEventListener('change', e => {
+    const f=e.target.files[0]; if(!f)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{ state.bgDataUrl=ev.target.result; screenBgImg.src=ev.target.result; fsBg.src=ev.target.result; screen.classList.add('has-bg'); fullscreen.classList.add('has-bg'); bgClearBtn.style.display='flex'; compResetBtn.style.display='block'; showToast('Background added — drag the dots to position'); };
+    reader.readAsDataURL(f); e.target.value='';
+  });
+  function clearBackground() {
+    state.bgDataUrl=null; screenBgImg.src=''; fsBg.src='';
+    screen.classList.remove('has-bg'); fullscreen.classList.remove('has-bg');
+    bgClearBtn.style.display='none'; compResetBtn.style.display='none';
+    updateScreenBg();
+  }
+  bgClearBtn.addEventListener('click',()=>{ clearBackground(); showToast('Background cleared'); });
+
+  // ---------- Sets UI ----------
+  function applyActiveSetToStage() {
+    return new Promise(async resolve => {
+      comp.style.display='none'; screenEmpty.style.display='flex'; stageMeta.style.visibility='hidden'; state.dots=[];
+      const a = setsManager.activeSet();
+      state.frames = [];
+      if (!a) { renderFramesList(); resolve(); return; }
+      setNameInput.value = a.name || 'Untitled set';
+      applyModeUI(a.mode || 'direct');
+      const urls = a.frames || [];
+      for (const url of urls) {
+        await new Promise(res => {
+          const img=new Image();
+          img.onload=()=>{ state.frames.push({ dataUrl:url, img, targets:extractTargets(img,state.dotCount) }); res(); };
+          img.onerror=res; img.src=url;
+        });
+      }
+      renderFramesList();
+      if (state.frames.length) startIfReady();
+      resolve();
     });
   }
 
-  function clearSlot(which) {
-    const emptyHTML = (label, status) => `
-      <div class="frame-preview">
-        <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 3v10m0 0l-4-4m4 4l4-4M3 17h14"/></svg>
-      </div>
-      <div class="frame-info">
-        <div class="frame-label">${label}</div>
-        <div class="frame-status">${status}</div>
-      </div>
-    `;
-    if (which === 'a') {
-      state.imgA = null; state.dataUrlA = null; state.targetsA = [];
-      slotA.classList.remove('filled');
-      slotA.innerHTML = emptyHTML('Start', 'Click or drop PNG');
-    } else {
-      state.imgB = null; state.dataUrlB = null; state.targetsB = [];
-      slotB.classList.remove('filled');
-      slotB.innerHTML = emptyHTML('End', 'Optional');
-    }
-    if (!state.targetsA.length) {
-      canvas.style.display = 'none';
-      phoneEmpty.style.display = 'block';
-      phoneMeta.style.visibility = 'hidden';
-      state.dots = [];
-    } else {
-      restartAnimation();
-    }
+  function renderSetsList() {
+    if (!setsManager.sets.length) { setsListEl.innerHTML='<div class="sets-empty">No saved sets</div>'; return; }
+    setsListEl.innerHTML='';
+    setsManager.sets.forEach(s => {
+      const card=document.createElement('div');
+      card.className='set-card'+(s.id===setsManager.activeId?' active':'');
+      const fr = s.frames || [];
+      const t1 = fr[0] ? `<div class="set-card-thumb"><img src="${fr[0]}"/></div>` : `<div class="set-card-thumb empty"></div>`;
+      const t2 = fr[1] ? `<div class="set-card-thumb"><img src="${fr[1]}"/></div>` : (fr.length>1?'':`<div class="set-card-thumb empty"></div>`);
+      const status = fr.length ? (fr.length+' frame'+(fr.length>1?'s':'')) : 'empty';
+      const deletable = setsManager.canDelete(s.id);
+      const delBtn = deletable ? `<button class="set-card-delete" title="Delete"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 3.5h8M4.5 3v-.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V3m-3.5.5l.5 6.5h4l.5-6.5"/></svg></button>` : '';
+      card.innerHTML = `<div class="set-card-thumbs">${t1}${t2}</div><div class="set-card-info"><div class="set-card-name" title="${s.name}">${s.name||'Untitled set'}</div><div class="set-card-meta">${status}</div></div>${delBtn}`;
+      card.addEventListener('click', e => { if(e.target.closest('.set-card-delete'))return; if(s.id===setsManager.activeId)return; setsManager.selectSet(s.id); renderSetsList(); applyActiveSetToStage(); });
+      const db=card.querySelector('.set-card-delete');
+      if (db) db.addEventListener('click', e => { e.stopPropagation(); const wasActive=s.id===setsManager.activeId; if(setsManager.deleteSet(s.id)){ renderSetsList(); if(wasActive)applyActiveSetToStage(); showToast('Set deleted'); } });
+      setsListEl.appendChild(card);
+    });
   }
+  setNameInput.addEventListener('input',e=>{ setsManager.updateActive({name:e.target.value}); renderSetsList(); });
+  setNameInput.addEventListener('blur',e=>{ if(!e.target.value.trim()){ e.target.value='Untitled set'; setsManager.updateActive({name:'Untitled set'}); renderSetsList(); } });
+  setNameInput.addEventListener('keydown',e=>{ if(e.key==='Enter')e.target.blur(); });
+  setsNewBtn.addEventListener('click',()=>{ setsManager.createNew(); clearBackground(); state.compX=0.5; state.compY=0.5; renderSetsList(); applyActiveSetToStage(); showToast('New set created'); setTimeout(()=>{setNameInput.focus();setNameInput.select();},50); });
 
+  // ---------- Transport ----------
+  playBtn.addEventListener('click',()=>{ state.playing=!state.playing; playLabel.textContent=state.playing?'Pause':'Play'; if(state.playing){state.lastTime=performance.now(); playIcon.innerHTML='<rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/>';} else playIcon.innerHTML='<path d="M3 2l7 4-7 4z"/>'; });
+  restartBtn.addEventListener('click',restartAnimation);
+
+  function setInitialPhase() {
+    if (morphable()) { state.seqFrom=0; state.seqTo=1; placeDotsAt(0); state.phase='hold'; }
+    else state.phase='forming'; // single frame (or disperse): scatter->form cycle
+    state.phaseT=0;
+  }
+  function restartAnimation() {
+    if (!state.frames.length) return;
+    initDots(); setInitialPhase();
+    if (!state.playing) { state.playing=true; playLabel.textContent='Pause'; playIcon.innerHTML='<rect x="3" y="2" width="2" height="8"/><rect x="7" y="2" width="2" height="8"/>'; }
+  }
   function startIfReady() {
-    if (!state.targetsA.length) return;
-    canvas.style.display = 'block';
-    phoneEmpty.style.display = 'none';
-    phoneMeta.style.visibility = 'visible';
-    applyCanvasScale();
-    initDots();
-    if (state.mode === 'direct') {
-      placeDotsAt('a');
-      state.phase = 'at-a';
-    } else {
-      state.phase = state.imgB ? 'forming-a' : 'forming';
-    }
-    state.phaseT = 0;
-    if (!state.rafId) {
-      state.lastTime = performance.now();
-      tick(state.lastTime);
-    }
+    if (!state.frames.length) return;
+    comp.style.display='block'; screenEmpty.style.display='none'; stageMeta.style.visibility='visible';
+    state.compScale=state.scale/100; layoutComp();
+    initDots(); setInitialPhase();
+    if (!state.rafId) { state.lastTime=performance.now(); tick(state.lastTime); }
   }
-
   function rebuildTargets() {
-    if (state.imgA) state.targetsA = extractTargets(state.imgA, state.dotCount);
-    if (state.imgB) state.targetsB = extractTargets(state.imgB, state.dotCount);
-    if (state.targetsA.length) {
-      initDots();
-      if (state.mode === 'direct') {
-        placeDotsAt('a');
-        state.phase = 'at-a';
-      } else {
-        state.phase = state.imgB ? 'forming-a' : 'forming';
-      }
-      state.phaseT = 0;
-    }
+    state.frames.forEach(f => { if (f.img) f.targets = extractTargets(f.img, state.dotCount); });
+    if (state.frames.length) { initDots(); setInitialPhase(); }
   }
 
+  // ---------- Target extraction & engine ----------
   function extractTargets(img, count) {
-    const sample = document.createElement('canvas');
-    const SS = 240;
-    sample.width = SS; sample.height = SS;
-    const sctx = sample.getContext('2d');
-    const ratio = Math.min(SS / img.width, SS / img.height) * 0.7;
-    const w = img.width * ratio;
-    const h = img.height * ratio;
-    sctx.drawImage(img, (SS - w) / 2, (SS - h) / 2, w, h);
-    const data = sctx.getImageData(0, 0, SS, SS).data;
-    const opaque = [];
-    for (let y = 0; y < SS; y++) {
-      for (let x = 0; x < SS; x++) {
-        if (data[(y * SS + x) * 4 + 3] > 80) opaque.push([x, y]);
-      }
-    }
-    if (!opaque.length) {
-      showToast('No opaque pixels found in PNG');
-      return [];
-    }
-    const targets = [];
-    const scale = STAGE_SIZE / SS;
-    for (let i = 0; i < count; i++) {
-      const p = opaque[Math.floor(Math.random() * opaque.length)];
-      targets.push({
-        x: (p[0] + (Math.random() - 0.5) * 1.2) * scale,
-        y: (p[1] + (Math.random() - 0.5) * 1.2) * scale,
-      });
-    }
+    const SS=240, sample=document.createElement('canvas'); sample.width=SS; sample.height=SS;
+    const sctx=sample.getContext('2d');
+    const ratio=Math.min(SS/img.width,SS/img.height)*0.7, w=img.width*ratio, h=img.height*ratio;
+    sctx.drawImage(img,(SS-w)/2,(SS-h)/2,w,h);
+    const data=sctx.getImageData(0,0,SS,SS).data, op=[];
+    for(let y=0;y<SS;y++)for(let x=0;x<SS;x++)if(data[(y*SS+x)*4+3]>80)op.push([x,y]);
+    if(!op.length){ showToast('No opaque pixels in PNG'); return []; }
+    const targets=[], scale=STAGE_SIZE/SS;
+    for(let i=0;i<count;i++){ const p=op[Math.floor(Math.random()*op.length)]; targets.push({x:(p[0]+(Math.random()-0.5)*1.2)*scale, y:(p[1]+(Math.random()-0.5)*1.2)*scale}); }
     return targets;
   }
 
+  // Each dot stores its scatter origin + we read per-frame targets at runtime
   function initDots() {
-    state.dots = [];
-    const n = state.targetsA.length;
-    const maxR = STAGE_SIZE * 0.42; // keep scatter inside the visible canvas
-    for (let i = 0; i < n; i++) {
-      const ta = state.targetsA[i];
-      const tb = state.imgB && state.targetsB[i] ? state.targetsB[i] : null;
-      const angle = Math.random() * Math.PI * 2;
-      const dist = maxR * (0.4 + Math.random() * 0.6);
-      const sx = STAGE_SIZE / 2 + Math.cos(angle) * dist;
-      const sy = STAGE_SIZE / 2 + Math.sin(angle) * dist;
-      state.dots.push({
-        x: sx, y: sy,
-        startX: sx, startY: sy,
-        ax: ta.x, ay: ta.y,
-        bx: tb ? tb.x : null, by: tb ? tb.y : null,
-        scatterX: 0, scatterY: 0,
-        delay: Math.random() * 0.3,
-      });
+    state.dots=[];
+    const f0 = state.frames[0]; if (!f0 || !f0.targets.length) return;
+    const n = f0.targets.length, maxR=STAGE_SIZE*0.42;
+    for(let i=0;i<n;i++){
+      const a=Math.random()*Math.PI*2, dd=maxR*(0.4+Math.random()*0.6);
+      const sx=STAGE_SIZE/2+Math.cos(a)*dd, sy=STAGE_SIZE/2+Math.sin(a)*dd;
+      state.dots.push({ x:sx,y:sy,startX:sx,startY:sy,scatterX:0,scatterY:0,delay:Math.random()*0.3,i });
     }
   }
-
-  // Place all dots immediately at the A or B target (used to start direct mode formed)
-  function placeDotsAt(which) {
-    for (const d of state.dots) {
-      if (which === 'a') { d.x = d.ax; d.y = d.ay; d.startX = d.ax; d.startY = d.ay; }
-      else if (which === 'b' && d.bx !== null) { d.x = d.bx; d.y = d.by; d.startX = d.bx; d.startY = d.by; }
-    }
+  // target accessor: frame index -> {x,y} for dot d
+  function ft(frameIdx, d) {
+    const f = state.frames[frameIdx];
+    if (!f || !f.targets[d.i]) return { x: STAGE_SIZE/2, y: STAGE_SIZE/2 };
+    return f.targets[d.i];
   }
+  function placeDotsAt(frameIdx) { for(const d of state.dots){ const t=ft(frameIdx,d); d.x=t.x; d.y=t.y; d.startX=t.x; d.startY=t.y; } }
+  function pickScatterTargets(){ const maxR=STAGE_SIZE*0.42; for(const d of state.dots){ const a=Math.random()*Math.PI*2,dist=maxR*(0.4+Math.random()*0.6); d.startX=d.x; d.startY=d.y; d.scatterX=STAGE_SIZE/2+Math.cos(a)*dist; d.scatterY=STAGE_SIZE/2+Math.sin(a)*dist; } }
+  function snapshotStart(){ for(const d of state.dots){ d.startX=d.x; d.startY=d.y; } }
+  function easeInOut(t){ return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
 
-  function pickScatterTargets() {
-    const maxR = STAGE_SIZE * 0.42;
-    for (const d of state.dots) {
-      const angle = Math.random() * Math.PI * 2;
-      const dist = maxR * (0.4 + Math.random() * 0.6);
-      d.startX = d.x; d.startY = d.y;
-      d.scatterX = STAGE_SIZE / 2 + Math.cos(angle) * dist;
-      d.scatterY = STAGE_SIZE / 2 + Math.sin(angle) * dist;
-    }
+  // Phase durations
+  const DUR = { 'hold':0.7, 'morph':1.2, 'forming':1, 'holding':0.8, 'dispersing':1, 'scattered':0.4 };
+
+  function phaseDisplayName(p){
+    if (p==='hold') return 'frame ' + (state.seqFrom+1);
+    if (p==='morph') return 'morphing ' + (state.seqFrom+1) + ' → ' + (state.seqTo+1);
+    return {forming:'forming',holding:'holding',dispersing:'dispersing',scattered:'scattered'}[p]||p;
   }
-
-  function snapshotStart() {
-    for (const d of state.dots) { d.startX = d.x; d.startY = d.y; }
-  }
-
-  function easeInOut(t) {
-    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-  }
-
-  function drawDotsTo(targetCtx) {
-    targetCtx.clearRect(0, 0, STAGE_SIZE, STAGE_SIZE);
-    targetCtx.fillStyle = state.color;
-    const r = state.dotSize;
-    for (const d of state.dots) {
-      targetCtx.beginPath();
-      targetCtx.arc(d.x, d.y, r, 0, Math.PI * 2);
-      targetCtx.fill();
-    }
-  }
-
-  function phaseDisplayName(p) {
-    return {
-      'forming': 'forming',
-      'holding': 'holding',
-      'dispersing': 'dispersing',
-      'scattered': 'scattered',
-      'at-a': 'at start',
-      'morphing-ab': 'morphing → end',
-      'at-b': 'at end',
-      'morphing-ba': 'morphing → start',
-      'forming-a': 'forming start',
-      'holding-a': 'holding start',
-      'holding-b': 'holding end',
-      'disperse-out': 'dispersing',
-      'disperse-cloud': 'cloud',
-      'disperse-in': 'forming end',
-      'disperse-out-b': 'dispersing',
-      'disperse-cloud-b': 'cloud',
-      'disperse-in-a': 'forming start',
-    }[p] || p;
-  }
-
-  const DUR = {
-    // single-image (no B)
-    'forming': 1, 'holding': 0.8, 'dispersing': 1, 'scattered': 0.4,
-    // direct (start formed)
-    'at-a': 0.7, 'morphing-ab': 1.2, 'at-b': 0.7, 'morphing-ba': 1.2,
-    // disperse (still forms first time)
-    'forming-a': 1, 'holding-a': 0.8, 'holding-b': 0.8,
-    'disperse-out': 0.9, 'disperse-cloud': 0.4, 'disperse-in': 0.9,
-    'disperse-out-b': 0.9, 'disperse-cloud-b': 0.4, 'disperse-in-a': 0.9,
-  };
 
   function nextPhase() {
     const p = state.phase;
-    if (!state.imgB) {
-      // Single-image: still forms from scatter
-      if (p === 'forming') return 'holding';
-      if (p === 'holding') { pickScatterTargets(); return 'dispersing'; }
-      if (p === 'dispersing') return 'scattered';
-      if (p === 'scattered') { snapshotStart(); return 'forming'; }
-    } else if (state.mode === 'direct') {
-      // Direct mode: A → morph → B → morph back → A. No scatter ever.
-      if (p === 'at-a') { snapshotStart(); return 'morphing-ab'; }
-      if (p === 'morphing-ab') return 'at-b';
-      if (p === 'at-b') { snapshotStart(); return 'morphing-ba'; }
-      if (p === 'morphing-ba') return 'at-a';
+    if (morphable()) {
+      if (p==='hold') { snapshotStart(); return 'morph'; }
+      if (p==='morph') {
+        // advance sequence pointer, looping
+        state.seqFrom = state.seqTo;
+        state.seqTo = (state.seqTo + 1) % state.frames.length;
+        return 'hold';
+      }
     } else {
-      // Disperse mode (kept as before)
-      if (p === 'forming-a') return 'holding-a';
-      if (p === 'holding-a') { pickScatterTargets(); return 'disperse-out'; }
-      if (p === 'disperse-out') return 'disperse-cloud';
-      if (p === 'disperse-cloud') { snapshotStart(); return 'disperse-in'; }
-      if (p === 'disperse-in') return 'holding-b';
-      if (p === 'holding-b') { pickScatterTargets(); return 'disperse-out-b'; }
-      if (p === 'disperse-out-b') return 'disperse-cloud-b';
-      if (p === 'disperse-cloud-b') { snapshotStart(); return 'disperse-in-a'; }
-      if (p === 'disperse-in-a') return 'forming-a';
+      // single frame: scatter -> form cycle
+      if (p==='forming') return 'holding';
+      if (p==='holding') { pickScatterTargets(); return 'dispersing'; }
+      if (p==='dispersing') return 'scattered';
+      if (p==='scattered') { snapshotStart(); return 'forming'; }
     }
     return p;
   }
 
   function updateDots() {
-    const p = state.phase;
-    const t = Math.min(1, state.phaseT / (DUR[p] || 1));
-    const e = easeInOut(t);
-
+    const p = state.phase, t = Math.min(1, state.phaseT/(DUR[p]||1)), e = easeInOut(t);
     for (const d of state.dots) {
-      if (p === 'forming' || p === 'forming-a' || p === 'disperse-in-a') {
-        const raw = (t - d.delay) / (1 - d.delay);
-        const tt = Math.max(0, Math.min(1, raw));
-        const ee = easeInOut(tt);
-        d.x = d.startX + (d.ax - d.startX) * ee;
-        d.y = d.startY + (d.ay - d.startY) * ee;
-      } else if (p === 'disperse-in') {
-        const raw = (t - d.delay) / (1 - d.delay);
-        const tt = Math.max(0, Math.min(1, raw));
-        const ee = easeInOut(tt);
-        d.x = d.startX + (d.bx - d.startX) * ee;
-        d.y = d.startY + (d.by - d.startY) * ee;
-      } else if (p === 'morphing-ab') {
-        d.x = d.startX + (d.bx - d.startX) * e;
-        d.y = d.startY + (d.by - d.startY) * e;
-      } else if (p === 'morphing-ba') {
-        d.x = d.startX + (d.ax - d.startX) * e;
-        d.y = d.startY + (d.ay - d.startY) * e;
-      } else if (p === 'at-a' || p === 'holding' || p === 'holding-a') {
-        d.x = d.ax + (Math.random() - 0.5) * 0.3;
-        d.y = d.ay + (Math.random() - 0.5) * 0.3;
-      } else if (p === 'at-b' || p === 'holding-b') {
-        d.x = d.bx + (Math.random() - 0.5) * 0.3;
-        d.y = d.by + (Math.random() - 0.5) * 0.3;
-      } else if (p === 'dispersing' || p === 'disperse-out' || p === 'disperse-out-b') {
-        const raw = (t - d.delay) / (1 - d.delay);
-        const tt = Math.max(0, Math.min(1, raw));
-        const ee = easeInOut(tt);
-        d.x = d.startX + (d.scatterX - d.startX) * ee;
-        d.y = d.startY + (d.scatterY - d.startY) * ee;
-      } else if (p === 'scattered' || p === 'disperse-cloud' || p === 'disperse-cloud-b') {
-        d.x += (Math.random() - 0.5) * 0.5;
-        d.y += (Math.random() - 0.5) * 0.5;
-        const dx = d.x - STAGE_SIZE / 2;
-        const dy = d.y - STAGE_SIZE / 2;
-        const r = Math.sqrt(dx * dx + dy * dy);
-        const limit = STAGE_SIZE * 0.45;
-        if (r > limit) {
-          d.x = STAGE_SIZE / 2 + (dx / r) * limit;
-          d.y = STAGE_SIZE / 2 + (dy / r) * limit;
-        }
+      if (p==='hold') {
+        const tt = ft(state.seqFrom, d);
+        d.x = tt.x + (Math.random()-0.5)*0.3; d.y = tt.y + (Math.random()-0.5)*0.3;
+      } else if (p==='morph') {
+        const tt = ft(state.seqTo, d);
+        d.x = d.startX + (tt.x - d.startX)*e; d.y = d.startY + (tt.y - d.startY)*e;
+      } else if (p==='forming') {
+        const tt = ft(0, d);
+        const raw=(t-d.delay)/(1-d.delay), tc=Math.max(0,Math.min(1,raw)), ee=easeInOut(tc);
+        d.x = d.startX + (tt.x - d.startX)*ee; d.y = d.startY + (tt.y - d.startY)*ee;
+      } else if (p==='holding') {
+        const tt = ft(0, d);
+        d.x = tt.x + (Math.random()-0.5)*0.3; d.y = tt.y + (Math.random()-0.5)*0.3;
+      } else if (p==='dispersing') {
+        const raw=(t-d.delay)/(1-d.delay), tc=Math.max(0,Math.min(1,raw)), ee=easeInOut(tc);
+        d.x = d.startX + (d.scatterX - d.startX)*ee; d.y = d.startY + (d.scatterY - d.startY)*ee;
+      } else if (p==='scattered') {
+        d.x += (Math.random()-0.5)*0.5; d.y += (Math.random()-0.5)*0.5;
+        const dx=d.x-STAGE_SIZE/2,dy=d.y-STAGE_SIZE/2,r=Math.sqrt(dx*dx+dy*dy),lim=STAGE_SIZE*0.45;
+        if(r>lim){ d.x=STAGE_SIZE/2+(dx/r)*lim; d.y=STAGE_SIZE/2+(dy/r)*lim; }
       }
     }
+  }
+
+  function drawDots(targetCtx, size) {
+    targetCtx.clearRect(0,0,size,size);
+    targetCtx.fillStyle=state.color;
+    const sc=size/STAGE_SIZE, r=state.dotSize*sc;
+    for(const d of state.dots){ targetCtx.beginPath(); targetCtx.arc(d.x*sc,d.y*sc,r,0,Math.PI*2); targetCtx.fill(); }
   }
 
   function tick(now) {
-    state.rafId = requestAnimationFrame(tick);
-    const dt = Math.min(100, now - state.lastTime) / 1000;
-    state.lastTime = now;
-
-    if (state.playing && state.targetsA.length) {
-      const phaseRate = 0.15 + (state.speed - 1) * 0.13;
-      state.phaseT += dt * phaseRate;
-      if (state.phaseT >= (DUR[state.phase] || 1)) {
-        state.phase = nextPhase();
-        state.phaseT = 0;
-      }
+    state.rafId=requestAnimationFrame(tick);
+    const dt=Math.min(100,now-state.lastTime)/1000; state.lastTime=now;
+    if (state.playing && state.frames.length && state.dots.length) {
+      const rate=0.15+(state.speed-1)*0.13;
+      state.phaseT+=dt*rate;
+      if (state.phaseT >= (DUR[state.phase]||1)) { state.phase=nextPhase(); state.phaseT=0; }
       updateDots();
-      phaseName.textContent = phaseDisplayName(state.phase);
-      stageStats.textContent = state.dots.length + ' dots';
+      phaseName.textContent=phaseDisplayName(state.phase);
+      stageStats.textContent=state.dots.length+' dots';
     }
-
-    drawDotsTo(ctx);
+    drawDots(ctx, STAGE_SIZE);
+    if (state.fsActive) drawDots(fsCtx, fsCanvas.width);
   }
 
-  let toastTimer;
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add('visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('visible'), 2000);
+  // ---------- Fullscreen ----------
+  function layoutFs() {
+    const vw=window.innerWidth, vh=window.innerHeight;
+    const deviceW=Math.min(vw, vh*9/19.5), size=deviceW*state.compScale;
+    fsCanvas.width=Math.round(size); fsCanvas.height=Math.round(size);
+    fsCanvas.style.left=(state.compX*vw-size/2)+'px'; fsCanvas.style.top=(state.compY*vh-size/2)+'px';
+  }
+  expandBtn.addEventListener('click',()=>{ state.fsActive=true; fullscreen.classList.add('active'); fsExit.style.display='flex'; layoutFs(); if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{}); });
+  function exitFs(){ state.fsActive=false; fullscreen.classList.remove('active'); fsExit.style.display='none'; if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{}); }
+  fsExit.addEventListener('click',exitFs);
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&state.fsActive)exitFs(); });
+  document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElement&&state.fsActive)exitFs(); });
+  window.addEventListener('resize',()=>{ layoutComp(); if(state.fsActive)layoutFs(); });
+
+  // ---------- Export ----------
+  const exportState={ format:'png', transparent:true, bgColor:'#F4F1EA' };
+  function setExportFormat(f){ exportState.format=f; fmtPngBtn.classList.toggle('active',f==='png'); fmtSvgBtn.classList.toggle('active',f==='svg'); exportBtnLabel.textContent=f==='png'?'Export PNG':'Export SVG'; }
+  fmtPngBtn.addEventListener('click',()=>setExportFormat('png'));
+  fmtSvgBtn.addEventListener('click',()=>setExportFormat('svg'));
+  exportTransparent.addEventListener('change',e=>{ exportState.transparent=e.target.checked; exportBgRow.style.display=e.target.checked?'none':'flex'; });
+  exportBgColor.addEventListener('input',e=>{ exportState.bgColor=e.target.value; exportBgReadout.textContent=e.target.value.toUpperCase(); });
+  exportFrameBtn.addEventListener('click',()=>{ if(!state.frames.length)return showToast('Add a frame first'); if(exportState.format==='png')doExportPNG(); else doExportSVG(); });
+  function doExportPNG() {
+    const res=4, ex=document.createElement('canvas'); ex.width=STAGE_SIZE*res; ex.height=STAGE_SIZE*res;
+    const ec=ex.getContext('2d');
+    if(!exportState.transparent){ ec.fillStyle=exportState.bgColor; ec.fillRect(0,0,ex.width,ex.height); }
+    ec.fillStyle=state.color; const r=state.dotSize*res;
+    for(const d of state.dots){ ec.beginPath(); ec.arc(d.x*res,d.y*res,r,0,Math.PI*2); ec.fill(); }
+    const link=document.createElement('a'); link.download='dot-avatar-'+Date.now()+'.png'; link.href=ex.toDataURL('image/png'); link.click();
+    showToast(`PNG exported (${ex.width}×${ex.height})`);
+  }
+  function doExportSVG() {
+    const parts=['<?xml version="1.0" encoding="UTF-8"?>',`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${STAGE_SIZE} ${STAGE_SIZE}" width="${STAGE_SIZE}" height="${STAGE_SIZE}">`];
+    if(!exportState.transparent) parts.push(`  <rect width="${STAGE_SIZE}" height="${STAGE_SIZE}" fill="${exportState.bgColor}"/>`);
+    parts.push(`  <g fill="${state.color}">`);
+    const r=state.dotSize;
+    for(const d of state.dots) parts.push(`    <circle cx="${Math.round(d.x*100)/100}" cy="${Math.round(d.y*100)/100}" r="${r}"/>`);
+    parts.push('  </g>','</svg>');
+    const blob=new Blob([parts.join('\n')],{type:'image/svg+xml'}); const url=URL.createObjectURL(blob);
+    const link=document.createElement('a'); link.download='dot-avatar-'+Date.now()+'.svg'; link.href=url; link.click(); URL.revokeObjectURL(url);
+    showToast(`SVG exported (${state.dots.length} dots)`);
   }
 
-  // Recompute canvas display size on window resize
-  window.addEventListener('resize', applyCanvasScale);
-
+  // ---------- Code modal ----------
+  exportCodeBtn.addEventListener('click',showCodeModal);
   function showCodeModal() {
-    const code = buildExportCode();
-    const backdrop = document.createElement('div');
-    backdrop.className = 'modal-backdrop';
-    backdrop.innerHTML = `
-      <div class="modal" onclick="event.stopPropagation()">
-        <div class="modal-header">
-          <div class="modal-title">Drop-in module</div>
-          <button class="button" id="modal-close">Close</button>
-        </div>
-        <p class="modal-desc">
-          Save as <code>dotMorph.js</code>. Import into any HTML or React project.
-          Usage example is in the comment header.
-        </p>
-        <textarea class="code-block" id="code-text" readonly></textarea>
-        <div class="button-row">
-          <button class="button primary" id="copy-code">Copy to clipboard</button>
-          <button class="button" id="download-code">Download .js</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(backdrop);
-    backdrop.addEventListener('click', () => backdrop.remove());
-    backdrop.querySelector('#code-text').value = code;
-    backdrop.querySelector('#modal-close').addEventListener('click', () => backdrop.remove());
-    backdrop.querySelector('#copy-code').addEventListener('click', () => {
-      const ta = backdrop.querySelector('#code-text');
-      ta.select();
-      try { navigator.clipboard.writeText(code); } catch(e) { document.execCommand('copy'); }
-      backdrop.querySelector('#copy-code').textContent = 'Copied ✓';
-      setTimeout(() => { backdrop.querySelector('#copy-code').textContent = 'Copy to clipboard'; }, 1400);
-    });
-    backdrop.querySelector('#download-code').addEventListener('click', () => {
-      const blob = new Blob([code], { type: 'text/javascript' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.download = 'dotMorph.js';
-      link.href = url;
-      link.click();
-      URL.revokeObjectURL(url);
-      showToast('Module downloaded');
-    });
+    const code=buildExportCode();
+    const bd=document.createElement('div'); bd.className='modal-backdrop';
+    bd.innerHTML=`<div class="modal" onclick="event.stopPropagation()"><div class="modal-header"><div class="modal-title">Drop-in module</div><button class="button" id="mc">Close</button></div><p class="modal-desc">Save as <code>dotMorph.js</code>. Pass an array of frame image URLs.</p><textarea class="code-block" id="ct" readonly></textarea><div class="button-row"><button class="button primary" id="cc">Copy to clipboard</button><button class="button" id="cd">Download .js</button></div></div>`;
+    document.body.appendChild(bd);
+    bd.addEventListener('click',()=>bd.remove());
+    bd.querySelector('#ct').value=code;
+    bd.querySelector('#mc').addEventListener('click',()=>bd.remove());
+    bd.querySelector('#cc').addEventListener('click',()=>{ const ta=bd.querySelector('#ct'); ta.select(); try{navigator.clipboard.writeText(code);}catch(e){document.execCommand('copy');} bd.querySelector('#cc').textContent='Copied ✓'; setTimeout(()=>bd.querySelector('#cc').textContent='Copy to clipboard',1400); });
+    bd.querySelector('#cd').addEventListener('click',()=>{ const b=new Blob([code],{type:'text/javascript'}); const u=URL.createObjectURL(b); const l=document.createElement('a'); l.download='dotMorph.js'; l.href=u; l.click(); URL.revokeObjectURL(u); showToast('Module downloaded'); });
   }
-
   function buildExportCode() {
     return `/**
- * DotMorph — animated dot-formation avatar
- * Generated from Dot Morph Studio v1.2
+ * DotMorph — animated dot-formation avatar (Dotty v3)
+ * Multi-frame morph: dots flow A->B->C->...->A
  *
  * Usage:
  *   import { DotMorph } from './dotMorph.js';
- *   const dm = new DotMorph(document.querySelector('canvas'), {
- *     startSrc: '/avatars/running.png',
- *     endSrc:   '/avatars/standing.png',  // optional
- *     dotCount: ${state.dotCount},
- *     dotSize:  ${state.dotSize},
- *     color:    '${state.color}',
- *     speed:    ${state.speed},
- *     mode:     '${state.mode}',          // 'direct' starts with start shape formed
- *     size:     ${STAGE_SIZE},
+ *   const dm = new DotMorph(canvasEl, {
+ *     frames: ['/a.png','/b.png','/c.png'], // 1 frame = disperse loop; 2+ = morph sequence
+ *     dotCount:${state.dotCount}, dotSize:${state.dotSize}, color:'${state.color}',
+ *     speed:${state.speed}, mode:'${state.mode}', size:${STAGE_SIZE}
  *   });
- *   await dm.load();
- *   dm.start();
- *
- * Runtime updates:
- *   dm.setColor('#FF6633'); dm.setSpeed(8); dm.setDotSize(4);
- *   dm.setDotCount(800); dm.setMode('disperse');
- *   dm.pause(); dm.resume();
- *   dm.exportPNG(); dm.destroy();
+ *   await dm.load(); dm.start();
+ *   dm.setColor('#fff'); dm.setSpeed(8); dm.setDotCount(900);
+ *   dm.setMode('disperse'); dm.pause(); dm.resume(); dm.exportPNG(); dm.destroy();
  */
 export class DotMorph {
-  constructor(canvas, opts = {}) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
-    this.size = opts.size || 560;
-    this.canvas.width = this.size;
-    this.canvas.height = this.size;
-    this.startSrc = opts.startSrc;
-    this.endSrc = opts.endSrc || null;
-    this.dotCount = opts.dotCount || 700;
-    this.dotSize = opts.dotSize || 3;
-    this.color = opts.color || '#C8533D';
-    this.speed = opts.speed || 5;
-    this.mode = opts.mode || 'direct';
-    this.imgA = null; this.imgB = null;
-    this.targetsA = []; this.targetsB = [];
-    this.dots = [];
-    this.phase = 'at-a';
-    this.phaseT = 0;
-    this.playing = false;
-    this.rafId = null;
-    this.lastTime = 0;
+  constructor(canvas, o={}) {
+    this.canvas=canvas; this.ctx=canvas.getContext('2d');
+    this.size=o.size||560; canvas.width=this.size; canvas.height=this.size;
+    this.frameSrcs=o.frames||[]; this.dotCount=o.dotCount||700; this.dotSize=o.dotSize||3;
+    this.color=o.color||'#C8533D'; this.speed=o.speed||5; this.mode=o.mode||'direct';
+    this.frames=[]; this.dots=[]; this.phase='hold'; this.phaseT=0;
+    this.seqFrom=0; this.seqTo=1; this.playing=false; this.raf=null; this.last=0;
   }
-
-  async load() {
-    this.imgA = await this._loadImage(this.startSrc);
-    this.targetsA = this._extractTargets(this.imgA, this.dotCount);
-    if (this.endSrc) {
-      this.imgB = await this._loadImage(this.endSrc);
-      this.targetsB = this._extractTargets(this.imgB, this.dotCount);
-    }
-    this._initDots();
-    if (this.mode === 'direct' && this.imgB) {
-      this._placeAt('a');
-      this.phase = 'at-a';
-    } else {
-      this.phase = this.imgB ? 'forming-a' : 'forming';
-    }
-    this.phaseT = 0;
-  }
-
-  start() {
-    this.playing = true;
-    this.lastTime = performance.now();
-    if (!this.rafId) this._tick(this.lastTime);
-  }
-
-  pause() { this.playing = false; }
-  resume() { if (!this.playing) { this.playing = true; this.lastTime = performance.now(); } }
-  setColor(c) { this.color = c; }
-  setSpeed(s) { this.speed = s; }
-  setDotSize(s) { this.dotSize = s; }
-
-  setMode(m) {
-    this.mode = m;
-    this._initDots();
-    if (m === 'direct' && this.imgB) { this._placeAt('a'); this.phase = 'at-a'; }
-    else this.phase = this.imgB ? 'forming-a' : 'forming';
-    this.phaseT = 0;
-  }
-
-  setDotCount(n) {
-    this.dotCount = n;
-    if (this.imgA) this.targetsA = this._extractTargets(this.imgA, n);
-    if (this.imgB) this.targetsB = this._extractTargets(this.imgB, n);
-    this._initDots();
-    if (this.mode === 'direct' && this.imgB) { this._placeAt('a'); this.phase = 'at-a'; }
-    else this.phase = this.imgB ? 'forming-a' : 'forming';
-    this.phaseT = 0;
-  }
-
-  exportPNG(filename = 'dot-avatar.png') {
-    const link = document.createElement('a');
-    link.download = filename;
-    link.href = this.canvas.toDataURL('image/png');
-    link.click();
-  }
-
-  destroy() {
-    if (this.rafId) cancelAnimationFrame(this.rafId);
-    this.rafId = null;
-    this.playing = false;
-  }
-
-  _loadImage(src) {
-    return new Promise((res, rej) => {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => res(img);
-      img.onerror = rej;
-      img.src = src;
-    });
-  }
-
-  _extractTargets(img, count) {
-    const SS = 240;
-    const c = document.createElement('canvas');
-    c.width = SS; c.height = SS;
-    const cx = c.getContext('2d');
-    const r = Math.min(SS / img.width, SS / img.height) * 0.7;
-    const w = img.width * r, h = img.height * r;
-    cx.drawImage(img, (SS - w) / 2, (SS - h) / 2, w, h);
-    const data = cx.getImageData(0, 0, SS, SS).data;
-    const op = [];
-    for (let y = 0; y < SS; y++)
-      for (let x = 0; x < SS; x++)
-        if (data[(y * SS + x) * 4 + 3] > 80) op.push([x, y]);
-    if (!op.length) return [];
-    const targets = [];
-    const s = this.size / SS;
-    for (let i = 0; i < count; i++) {
-      const p = op[Math.floor(Math.random() * op.length)];
-      targets.push({
-        x: (p[0] + (Math.random() - 0.5) * 1.2) * s,
-        y: (p[1] + (Math.random() - 0.5) * 1.2) * s,
-      });
-    }
-    return targets;
-  }
-
-  _initDots() {
-    this.dots = [];
-    const maxR = this.size * 0.42;
-    for (let i = 0; i < this.targetsA.length; i++) {
-      const ta = this.targetsA[i];
-      const tb = this.imgB && this.targetsB[i] ? this.targetsB[i] : null;
-      const a = Math.random() * Math.PI * 2;
-      const d = maxR * (0.4 + Math.random() * 0.6);
-      const sx = this.size / 2 + Math.cos(a) * d;
-      const sy = this.size / 2 + Math.sin(a) * d;
-      this.dots.push({
-        x: sx, y: sy, startX: sx, startY: sy,
-        ax: ta.x, ay: ta.y,
-        bx: tb ? tb.x : null, by: tb ? tb.y : null,
-        scatterX: 0, scatterY: 0,
-        delay: Math.random() * 0.3,
-      });
-    }
-  }
-
-  _placeAt(which) {
-    for (const d of this.dots) {
-      if (which === 'a') { d.x = d.ax; d.y = d.ay; d.startX = d.ax; d.startY = d.ay; }
-      else if (which === 'b' && d.bx !== null) { d.x = d.bx; d.y = d.by; d.startX = d.bx; d.startY = d.by; }
-    }
-  }
-
-  _pickScatter() {
-    const maxR = this.size * 0.42;
-    for (const d of this.dots) {
-      const a = Math.random() * Math.PI * 2;
-      const r = maxR * (0.4 + Math.random() * 0.6);
-      d.startX = d.x; d.startY = d.y;
-      d.scatterX = this.size / 2 + Math.cos(a) * r;
-      d.scatterY = this.size / 2 + Math.sin(a) * r;
-    }
-  }
-
-  _snap() { for (const d of this.dots) { d.startX = d.x; d.startY = d.y; } }
-  _ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
-
-  _phaseDur(p) {
-    const D = {
-      'forming': 1, 'holding': 0.8, 'dispersing': 1, 'scattered': 0.4,
-      'at-a': 0.7, 'morphing-ab': 1.2, 'at-b': 0.7, 'morphing-ba': 1.2,
-      'forming-a': 1, 'holding-a': 0.8, 'holding-b': 0.8,
-      'disperse-out': 0.9, 'disperse-cloud': 0.4, 'disperse-in': 0.9,
-      'disperse-out-b': 0.9, 'disperse-cloud-b': 0.4, 'disperse-in-a': 0.9,
-    };
-    return D[p] || 1;
-  }
-
-  _nextPhase() {
-    const p = this.phase;
-    if (!this.imgB) {
-      if (p === 'forming') return 'holding';
-      if (p === 'holding') { this._pickScatter(); return 'dispersing'; }
-      if (p === 'dispersing') return 'scattered';
-      if (p === 'scattered') { this._snap(); return 'forming'; }
-    } else if (this.mode === 'direct') {
-      if (p === 'at-a') { this._snap(); return 'morphing-ab'; }
-      if (p === 'morphing-ab') return 'at-b';
-      if (p === 'at-b') { this._snap(); return 'morphing-ba'; }
-      if (p === 'morphing-ba') return 'at-a';
-    } else {
-      if (p === 'forming-a') return 'holding-a';
-      if (p === 'holding-a') { this._pickScatter(); return 'disperse-out'; }
-      if (p === 'disperse-out') return 'disperse-cloud';
-      if (p === 'disperse-cloud') { this._snap(); return 'disperse-in'; }
-      if (p === 'disperse-in') return 'holding-b';
-      if (p === 'holding-b') { this._pickScatter(); return 'disperse-out-b'; }
-      if (p === 'disperse-out-b') return 'disperse-cloud-b';
-      if (p === 'disperse-cloud-b') { this._snap(); return 'disperse-in-a'; }
-      if (p === 'disperse-in-a') return 'forming-a';
-    }
-    return p;
-  }
-
-  _updateDots() {
-    const p = this.phase;
-    const t = Math.min(1, this.phaseT / this._phaseDur(p));
-    const e = this._ease(t);
-    for (const d of this.dots) {
-      if (p === 'forming' || p === 'forming-a' || p === 'disperse-in-a') {
-        const tt = Math.max(0, Math.min(1, (t - d.delay) / (1 - d.delay)));
-        const ee = this._ease(tt);
-        d.x = d.startX + (d.ax - d.startX) * ee;
-        d.y = d.startY + (d.ay - d.startY) * ee;
-      } else if (p === 'disperse-in') {
-        const tt = Math.max(0, Math.min(1, (t - d.delay) / (1 - d.delay)));
-        const ee = this._ease(tt);
-        d.x = d.startX + (d.bx - d.startX) * ee;
-        d.y = d.startY + (d.by - d.startY) * ee;
-      } else if (p === 'morphing-ab') {
-        d.x = d.startX + (d.bx - d.startX) * e;
-        d.y = d.startY + (d.by - d.startY) * e;
-      } else if (p === 'morphing-ba') {
-        d.x = d.startX + (d.ax - d.startX) * e;
-        d.y = d.startY + (d.ay - d.startY) * e;
-      } else if (p === 'at-a' || p === 'holding' || p === 'holding-a') {
-        d.x = d.ax + (Math.random() - 0.5) * 0.3;
-        d.y = d.ay + (Math.random() - 0.5) * 0.3;
-      } else if (p === 'at-b' || p === 'holding-b') {
-        d.x = d.bx + (Math.random() - 0.5) * 0.3;
-        d.y = d.by + (Math.random() - 0.5) * 0.3;
-      } else if (p === 'dispersing' || p === 'disperse-out' || p === 'disperse-out-b') {
-        const tt = Math.max(0, Math.min(1, (t - d.delay) / (1 - d.delay)));
-        const ee = this._ease(tt);
-        d.x = d.startX + (d.scatterX - d.startX) * ee;
-        d.y = d.startY + (d.scatterY - d.startY) * ee;
-      } else if (p === 'scattered' || p === 'disperse-cloud' || p === 'disperse-cloud-b') {
-        d.x += (Math.random() - 0.5) * 0.5;
-        d.y += (Math.random() - 0.5) * 0.5;
-        const dx = d.x - this.size / 2;
-        const dy = d.y - this.size / 2;
-        const r = Math.sqrt(dx * dx + dy * dy);
-        const limit = this.size * 0.45;
-        if (r > limit) {
-          d.x = this.size / 2 + (dx / r) * limit;
-          d.y = this.size / 2 + (dy / r) * limit;
-        }
-      }
-    }
-  }
-
-  _draw() {
-    this.ctx.clearRect(0, 0, this.size, this.size);
-    this.ctx.fillStyle = this.color;
-    for (const d of this.dots) {
-      this.ctx.beginPath();
-      this.ctx.arc(d.x, d.y, this.dotSize, 0, Math.PI * 2);
-      this.ctx.fill();
-    }
-  }
-
-  _tick(now) {
-    this.rafId = requestAnimationFrame(t => this._tick(t));
-    const dt = Math.min(100, now - this.lastTime) / 1000;
-    this.lastTime = now;
-    if (this.playing && this.targetsA.length) {
-      const rate = 0.15 + (this.speed - 1) * 0.13;
-      this.phaseT += dt * rate;
-      if (this.phaseT >= this._phaseDur(this.phase)) {
-        this.phase = this._nextPhase();
-        this.phaseT = 0;
-      }
-      this._updateDots();
-    }
-    this._draw();
-  }
+  async load(){ this.frames=[]; for(const src of this.frameSrcs){ const img=await this._img(src); this.frames.push({img, targets:this._extract(img,this.dotCount)}); } this._init(); this._initPhase(); }
+  _morphable(){ return this.mode==='direct' && this.frames.length>=2; }
+  _initPhase(){ if(this._morphable()){ this.seqFrom=0; this.seqTo=1; this._at(0); this.phase='hold'; } else this.phase='forming'; this.phaseT=0; }
+  start(){ this.playing=true; this.last=performance.now(); if(!this.raf)this._tick(this.last); }
+  pause(){this.playing=false;} resume(){if(!this.playing){this.playing=true;this.last=performance.now();}}
+  setColor(c){this.color=c;} setSpeed(s){this.speed=s;} setDotSize(s){this.dotSize=s;}
+  setMode(m){ this.mode=m; this._init(); this._initPhase(); }
+  setDotCount(n){ this.dotCount=n; this.frames.forEach(f=>f.targets=this._extract(f.img,n)); this._init(); this._initPhase(); }
+  exportPNG(fn='dot-avatar.png'){ const l=document.createElement('a'); l.download=fn; l.href=this.canvas.toDataURL('image/png'); l.click(); }
+  destroy(){ if(this.raf)cancelAnimationFrame(this.raf); this.raf=null; this.playing=false; }
+  _img(src){ return new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=rej;i.src=src;}); }
+  _extract(img,count){ const SS=240,c=document.createElement('canvas');c.width=SS;c.height=SS;const x=c.getContext('2d');const r=Math.min(SS/img.width,SS/img.height)*0.7,w=img.width*r,h=img.height*r;x.drawImage(img,(SS-w)/2,(SS-h)/2,w,h);const d=x.getImageData(0,0,SS,SS).data,op=[];for(let y=0;y<SS;y++)for(let X=0;X<SS;X++)if(d[(y*SS+X)*4+3]>80)op.push([X,y]);if(!op.length)return[];const t=[],s=this.size/SS;for(let i=0;i<count;i++){const p=op[Math.floor(Math.random()*op.length)];t.push({x:(p[0]+(Math.random()-0.5)*1.2)*s,y:(p[1]+(Math.random()-0.5)*1.2)*s});}return t; }
+  _init(){ this.dots=[]; const f0=this.frames[0]; if(!f0||!f0.targets.length)return; const n=f0.targets.length,mR=this.size*0.42; for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,dd=mR*(0.4+Math.random()*0.6),sx=this.size/2+Math.cos(a)*dd,sy=this.size/2+Math.sin(a)*dd;this.dots.push({x:sx,y:sy,startX:sx,startY:sy,scatterX:0,scatterY:0,delay:Math.random()*0.3,i});} }
+  _ft(fi,d){ const f=this.frames[fi]; if(!f||!f.targets[d.i])return{x:this.size/2,y:this.size/2}; return f.targets[d.i]; }
+  _at(fi){ for(const d of this.dots){const t=this._ft(fi,d);d.x=t.x;d.y=t.y;d.startX=t.x;d.startY=t.y;} }
+  _scatter(){ const mR=this.size*0.42; for(const d of this.dots){const a=Math.random()*Math.PI*2,r=mR*(0.4+Math.random()*0.6);d.startX=d.x;d.startY=d.y;d.scatterX=this.size/2+Math.cos(a)*r;d.scatterY=this.size/2+Math.sin(a)*r;} }
+  _snap(){ for(const d of this.dots){d.startX=d.x;d.startY=d.y;} }
+  _ease(t){ return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
+  _dur(p){ return ({hold:0.7,morph:1.2,forming:1,holding:0.8,dispersing:1,scattered:0.4})[p]||1; }
+  _next(){ const p=this.phase; if(this._morphable()){ if(p==='hold'){this._snap();return'morph';} if(p==='morph'){this.seqFrom=this.seqTo;this.seqTo=(this.seqTo+1)%this.frames.length;return'hold';} } else { if(p==='forming')return'holding'; if(p==='holding'){this._scatter();return'dispersing';} if(p==='dispersing')return'scattered'; if(p==='scattered'){this._snap();return'forming';} } return p; }
+  _upd(){ const p=this.phase,t=Math.min(1,this.phaseT/this._dur(p)),e=this._ease(t); for(const d of this.dots){ if(p==='hold'){const tt=this._ft(this.seqFrom,d);d.x=tt.x+(Math.random()-0.5)*0.3;d.y=tt.y+(Math.random()-0.5)*0.3;}else if(p==='morph'){const tt=this._ft(this.seqTo,d);d.x=d.startX+(tt.x-d.startX)*e;d.y=d.startY+(tt.y-d.startY)*e;}else if(p==='forming'){const tt=this._ft(0,d),raw=(t-d.delay)/(1-d.delay),tc=Math.max(0,Math.min(1,raw)),ee=this._ease(tc);d.x=d.startX+(tt.x-d.startX)*ee;d.y=d.startY+(tt.y-d.startY)*ee;}else if(p==='holding'){const tt=this._ft(0,d);d.x=tt.x+(Math.random()-0.5)*0.3;d.y=tt.y+(Math.random()-0.5)*0.3;}else if(p==='dispersing'){const raw=(t-d.delay)/(1-d.delay),tc=Math.max(0,Math.min(1,raw)),ee=this._ease(tc);d.x=d.startX+(d.scatterX-d.startX)*ee;d.y=d.startY+(d.scatterY-d.startY)*ee;}else if(p==='scattered'){d.x+=(Math.random()-0.5)*0.5;d.y+=(Math.random()-0.5)*0.5;const dx=d.x-this.size/2,dy=d.y-this.size/2,r=Math.sqrt(dx*dx+dy*dy),lim=this.size*0.45;if(r>lim){d.x=this.size/2+(dx/r)*lim;d.y=this.size/2+(dy/r)*lim;}} } }
+  _draw(){ this.ctx.clearRect(0,0,this.size,this.size); this.ctx.fillStyle=this.color; for(const d of this.dots){this.ctx.beginPath();this.ctx.arc(d.x,d.y,this.dotSize,0,Math.PI*2);this.ctx.fill();} }
+  _tick(now){ this.raf=requestAnimationFrame(t=>this._tick(t)); const dt=Math.min(100,now-this.last)/1000; this.last=now; if(this.playing&&this.dots.length){const rate=0.15+(this.speed-1)*0.13;this.phaseT+=dt*rate;if(this.phaseT>=this._dur(this.phase)){this.phase=this._next();this.phaseT=0;}this._upd();}this._draw(); }
 }
 `;
   }
 
-  applyCanvasScale();
-  state.lastTime = performance.now();
+  // ---------- Toast ----------
+  let tT;
+  function showToast(m){ toast.textContent=m; toast.classList.add('visible'); clearTimeout(tT); tT=setTimeout(()=>toast.classList.remove('visible'),2000); }
+
+  // ---------- Init ----------
+  comp.style.display='none';
+  renderSetsList();
+  (async function(){
+    const a=setsManager.activeSet();
+    if (a && a.frames && a.frames.length) { await applyActiveSetToStage(); }
+    else { setNameInput.value=a?(a.name||'Untitled set'):'Untitled set'; applyModeUI(a&&a.mode?a.mode:'direct'); renderFramesList(); }
+  })();
 })();
 </script>
 </body>
